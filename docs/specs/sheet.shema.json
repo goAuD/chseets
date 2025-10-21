@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "chseets Sheet Schema",
+  "description": "Validation schema for chseets Markdown front matter.",
+  "type": "object",
+  "required": [
+    "title",
+    "summary",
+    "tags",
+    "language",
+    "level",
+    "slug",
+    "version",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$"
+    },
+    "level": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "updated_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "authors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "print": {
+      "type": "object",
+      "properties": {
+        "columns": { "type": "integer", "enum": [1, 2] },
+        "margin": {
+          "type": "string",
+          "enum": ["standard", "narrow", "none"]
+        },
+        "scale": { "type": "number", "minimum": 0.5, "maximum": 2.0 }
+      },
+      "required": []
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "license": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "published"]
+    }
+  },
+  "additionalProperties": false
+}
