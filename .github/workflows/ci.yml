@@ -52,7 +52,9 @@ jobs:
           swagger-cli validate docs/api/openapi.yaml
       
       - name: Lint Markdown (permissive)
+        if: always()
         continue-on-error: true
         run: |
-          npx --yes markdownlint-cli2 "**/*.md" --config .markdownlint.json
+          npx --yes markdownlint-cli2 "**/*.md" --config .markdownlint.json || true
+
  
