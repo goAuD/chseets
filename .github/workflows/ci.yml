@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Ne fusson párhuzamosan ugyanarra a branchre
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Lint & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # --- Markdown lint ---
+      # Létrehozunk egy egyszerű markdownlint configot (engedékeny, hogy most ne bukjon el)
+      - name: Create markdownlint config
+        run: |
+          cat > .markdownlint.jsonc <<'JSON'
+          {
+            "MD013": false,  // line length off
+            "MD033": false,  // inline HTML allowed
+            "MD041": false   // first line heading off
+          }
+          JSON
+
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli2 "**/*.md" "#node_modules" "#.git"
+
+      # --- JSON szintaxis ellenőrzés (schema fájl) ---
+      - name: Validate JSON syntax (sheet.schema.json)
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          jq -e . docs/specs/sheet.schema.json >/dev/null
+
+      # --- OpenAPI ellenőrzés ---
+      - name: Validate OpenAPI (openapi.yaml)
+        run: |
+          npm i -g @apidevtools/swagger-cli
+          swagger-cli validate docs/api/openapi.yaml
+
+      # --- (Opcionális) Linkellenőrzés, de nem bukjon miatta a build ---
+      - name: Link check (internal only)
+        continue-on-error: true
+        run: |
+          npx --yes lychee-cli \
+            --no-progress --max-redirects 5 --retry 2 \
+            --include-fragments --accept 200..399 \
+            --base . \
+            "README.md" "docs/**/*.md"
