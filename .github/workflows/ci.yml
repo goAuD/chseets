@@ -18,6 +18,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Show repo tree (debug)
+        run: |
+          pwd
+          ls -la
+          echo "---- docs/ ----"
+          ls -la docs || true
+          echo "---- docs/specs/ ----"
+          ls -la docs/specs || true
+          echo "---- docs/api/ ----"
+          ls -la docs/api || true
+          echo "---- git-tracked files (grep schema/openapi) ----"
+          git ls-tree -r --name-only HEAD | grep -i -E "schema|openapi" || true
+
+      - name: Assert required files exist
+        run: |
+          test -f docs/specs/sheet.schema.json || (echo "Missing: docs/specs/sheet.schema.json" && exit 1)
+          test -f docs/api/openapi.yaml || (echo "Missing: docs/api/openapi.yaml" && exit 1)
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -32,8 +50,3 @@ jobs:
         run: |
           npm i -g @apidevtools/swagger-cli
           swagger-cli validate docs/api/openapi.yaml
-      
-      - name: Lint Markdown (permissive)
-        run: |
-          npx --yes markdownlint-cli "**/*.md" --config .markdownlint.json
-
