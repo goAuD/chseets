@@ -32,3 +32,8 @@ jobs:
         run: |
           npm i -g @apidevtools/swagger-cli
           swagger-cli validate docs/api/openapi.yaml
+      
+      - name: Lint Markdown (permissive)
+        run: |
+          npx --yes markdownlint-cli "**/*.md" --config .markdownlint.json
+
