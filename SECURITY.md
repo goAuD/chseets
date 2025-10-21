@@ -23,7 +23,7 @@ If you believe you have found a security or privacy vulnerability:
 1. **Do not** open a public issue or discussion.  
 2. Instead, send a detailed report to:
 
-   **[chseets@wasdtravel.com](mailto:chseets@wasdtravel.com)**
+   <mailto:chseets@wasdtravel.com>
 
 Please include:
 
@@ -65,7 +65,7 @@ instead of the security contact.
 ## 6. PGP / encryption (optional)
 
 If your report includes sensitive data, you may request a PGP key via
-**[chseets@wasdtravel.com](mailto:chseets@wasdtravel.com)** before sending details.
+<mailto:chseets@wasdtravel.com> before sending details.
 
 ---
 
