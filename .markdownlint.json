@@ -9,3 +9,7 @@
   "MD012": false,  // multiple consecutive blank lines
   "MD032": false   // lists should be surrounded by blank lines
 }
+{
+  "default": true,
+  "MD034": true
+}
