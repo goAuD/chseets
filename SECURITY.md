@@ -9,7 +9,7 @@ This document describes how to report and handle security issues for the
 
 Security issues can be reported for:
 
-- **Website & API:** `https://chseets.com`
+- **Website & API:** `[https://chseets.com/](https://chseets.com/)`
 - **Repository code:** scripts, tools, and validators under Apache-2.0
 - **Data schema:** `sheet.schema.json`
 - **Docs:** markdown content that may expose sensitive links or credentials
@@ -23,7 +23,7 @@ If you believe you have found a security or privacy vulnerability:
 1. **Do not** open a public issue or discussion.  
 2. Instead, send a detailed report to:
 
-   **chseets@wasdtravel.com**
+   **[chseets@wasdtravel.com](mailto:chseets@wasdtravel.com)**
 
 Please include:
 
@@ -65,7 +65,7 @@ instead of the security contact.
 ## 6. PGP / encryption (optional)
 
 If your report includes sensitive data, you may request a PGP key via
-**chseets@wasdtravel.com** before sending details.
+**[chseets@wasdtravel.com](mailto:chseets@wasdtravel.com)** before sending details.
 
 ---
 

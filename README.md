@@ -8,7 +8,7 @@ cheat sheets. It’s privacy-respecting, lightweight, and installable as a PWA.
 - **Works offline:** install the PWA and keep your favorites.
 - **Open content:** community contributions are welcome.
 
-> Live: https://chseets.com
+> Live: [https://chseets.com/](https://chseets.com/)
 
 ---
 
@@ -16,7 +16,7 @@ cheat sheets. It’s privacy-respecting, lightweight, and installable as a PWA.
 
 ### 1) Browse & print
 
-- Go to **https://chseets.com/sheets/**
+- Go to **[https://chseets.com/sheets/](https://chseets.com/sheets/)**
 - Open any sheet, then **Ctrl/Cmd+P**
 - Print on **A4**, 100% scale, margins “Default” (or “None”), background graphics on
 
@@ -28,7 +28,7 @@ cheat sheets. It’s privacy-respecting, lightweight, and installable as a PWA.
 
 ### 3) API (preview)
 
-- Overview: https://chseets.com/api/
+- Overview: [https://chseets.com/api/](https://chseets.com/api/)
 - Typical endpoints:
   - `GET /api/sheets` - list metadata
   - `GET /api/sheets/{slug}` - fetch one
@@ -93,7 +93,7 @@ endorsement.
 
 ## Links
 
-- Sheets: https://chseets.com/sheets/
-- About:  https://chseets.com/about/
-- API:    https://chseets.com/api/
+- Sheets: [https://chseets.com/sheets/](https://chseets.com/sheets/)
+- About:  [https://chseets.com/about/](https://chseets.com/about/)
+- API:    [https://chseets.com/api/](https://chseets.com/api/)
 

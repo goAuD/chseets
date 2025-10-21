@@ -88,7 +88,7 @@ Unauthorized or misleading use may lead to:
 ## 8. Questions & permissions
 
 For trademark questions or partnership requests, contact:  
-**chseets@wasdtravel.com**
+**[chseets@wasdtravel.com](mailto:chseets@wasdtravel.com)**
 
 ---
 
