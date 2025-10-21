@@ -4,7 +4,7 @@ The **chseets API** provides programmatic access to published cheat sheet
 metadata and content. It is designed for read-only public use and lightweight
 integrations (search, list, fetch).
 
-> Base URL: **https://chseets.com/api/**  
+> Base URL: **[https://chseets.com/api/](https://chseets.com/api/)**  
 > Status: **Preview** — breaking changes may occur without notice.
 
 ---

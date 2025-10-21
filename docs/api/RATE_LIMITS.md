@@ -1,7 +1,7 @@
 # chseets - API Rate Limits & Fair Use Policy
 
 This document defines the default **rate limits** and **fair use rules** for
-accessing the public chseets API at `https://chseets.com/api/`.
+accessing the public chseets API at [https://chseets.com/api/](https://chseets.com/api/).
 
 The limits are designed to keep the service fast and stable for everyone while
 allowing reasonable open access for developers and educators.
@@ -88,7 +88,7 @@ Excessive or abusive behavior includes:
 
 > For legitimate high-volume use (e.g., research, education, integration),
 contact the maintainers via the email listed in SECURITY.md or on
-https://chseets.com/about/.
+[https://chseets.com/about/](https://chseets.com/about/)
 
 ---
 

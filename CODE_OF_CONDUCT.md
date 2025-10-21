@@ -57,7 +57,7 @@ acting as a representative at an event.
 ## 5. Enforcement
 
 Instances of abusive or otherwise unacceptable behavior may be reported by
-emailing **chseets@wasdtravel.com**.  
+emailing **[chseets@wasdtravel.com](mailto:chseets@wasdtravel.com)**.  
 All complaints will be reviewed and handled with fairness and discretion.
 
 Project maintainers are obligated to respect the privacy and security of the
@@ -69,12 +69,12 @@ reporter of any incident.
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage],
 version 2.1, available at:
-https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
+[https://www.contributor-covenant.org/version/2/1/code_of_conduct.html](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html)
 
 For answers to common questions about this code of conduct, see:
-https://www.contributor-covenant.org/faq
+[https://www.contributor-covenant.org/faq](https://www.contributor-covenant.org/faq)
 
-[homepage]: https://www.contributor-covenant.org
+[homepage]: [https://www.contributor-covenant.org](https://www.contributor-covenant.org)
 
 ---
 

@@ -1,7 +1,7 @@
 # FILE: LICENSE-CONTENT
 
 Creative Commons Attribution 4.0 International (CC BY 4.0)
-https://creativecommons.org/licenses/by/4.0/
+[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
 
 ====================================================================
 Official summary (non-legal):
@@ -36,7 +36,7 @@ The license allows copying, redistributing, remixing, transforming and building
 upon the material for any purpose, even commercially, provided that proper
 credit is given.  For the full legal text, please refer to:
 
-👉 https://creativecommons.org/licenses/by/4.0/legalcode
+👉 [https://creativecommons.org/licenses/by/4.0/legalcode](https://creativecommons.org/licenses/by/4.0/legalcode)
 
 ====================================================================
 Attribution notice
@@ -47,7 +47,7 @@ licensed under the Creative Commons Attribution 4.0 International License.
 
 You must attribute reuse as follows:
 
-> “Based on content from chseets (https://chseets.com),  
+> “Based on content from chseets [https://chseets.com/](https://chseets.com/),  
 > used under CC BY 4.0 - © 2025 chseets Team and contributors.”
 
 ====================================================================

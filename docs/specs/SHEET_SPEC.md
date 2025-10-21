@@ -72,8 +72,8 @@ Use brief hints or gotchas.
 
 # References
 
-https://example.com/
-https://example.org/
+[https://example.com/](https://example.com/)
+[https://example.org/](https://example.org/)
 
 - Top-level title `#` is optional if `title` is already in metadata.
 - Keep hierarchy shallow: at most `###`.
@@ -95,7 +95,7 @@ https://example.org/
 ## 5. Versioning
 
 Each change that modifies content meaningfully must bump `version` following
-[Semantic Versioning](https://semver.org/):
+[Semantic Versioning][https://semver.org/](https://semver.org/):
 
 | Change type | Example | Description |
 |--------------|----------|-------------|

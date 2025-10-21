@@ -48,7 +48,7 @@ for digital use.
 
 ## 4. Typography
 
-**Primary font:** [Montserrat](https://fonts.google.com/specimen/Montserrat)  
+**Primary font:** [Montserrat][https://fonts.google.com/specimen/Montserrat](https://fonts.google.com/specimen/Montserrat)  
 Weights: `400`, `500`, `700`  
 Fallback: `sans-serif`
 
@@ -70,7 +70,7 @@ Never replace Montserrat with decorative fonts in official materials.
 ## 6. Iconography
 
 Simple line icons (24 px grid) using consistent stroke width.  
-Preferred library: [Lucide Icons](https://lucide.dev/)
+Preferred library: [Lucide Icons][https://lucide.dev/](https://lucide.dev/)
 
 Color accent: `Cyan Glow (#00FFFF)` or grayscale only.
 
