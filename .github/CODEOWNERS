@@ -1,0 +1,13 @@
+## FILE: .github/CODEOWNERS
+# chseets - CODEOWNERS
+# The owners listed here will receive an automatic review request for the specified routes.
+# syntax: <path> <@user or  @org/team>
+
+/docs/                      @goAuD
+/docs/api/                  @goAuD
+/docs/legal/                @goAuD
+/docs/product/              @goAuD
+/docs/dev/                  @goAuD
+/sheets/                    @goAuD
+/templates/                 @goAuD
+/tools/                     @goAuD
