@@ -77,4 +77,4 @@ If your report includes sensitive data, you may request a PGP key via
 
 ---
 
-_Last updated: 2025-10-21
+_Last updated: 2025-10-21_

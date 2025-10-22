@@ -1,4 +1,4 @@
-# chseets - Printable cheat sheets for humans
+# chseets - Printable cheat sheets for all
 
 **chseets** is a clean, distraction-free collection of printable, A4-friendly
 cheat sheets. It’s privacy-respecting, lightweight, and installable as a PWA.
@@ -97,3 +97,4 @@ endorsement.
 - About:  <https://chseets.com/about/>
 - API:    <https://chseets.com/api/>
 
+_Last updated: 2025-10-21_

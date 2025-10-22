@@ -128,4 +128,4 @@ Color accent: `Cyan Glow (#00FFFF)` or grayscale only.
 
 ---
 
-_Last updated: 2025-10-21
+_Last updated: 2025-10-21_

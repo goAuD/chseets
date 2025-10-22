@@ -68,4 +68,4 @@ Each new sheet is reviewed by maintainers or community members.
 
 Approved sheets are merged and appear on the site within 24 hours.
 
-_Last updated: 2025-10-21
+_Last updated: 2025-10-21_

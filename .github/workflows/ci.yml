@@ -56,5 +56,3 @@ jobs:
         continue-on-error: true
         run: |
           npx --yes markdownlint-cli2 "**/*.md" --config .markdownlint.json || true
-
- 

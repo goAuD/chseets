@@ -56,4 +56,4 @@ To make structured learning accessible to everyone - fast, visual, distraction-f
 
 ---
 
-_Last updated: 2025-10-21
+_Last updated: 2025-10-21_

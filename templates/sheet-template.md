@@ -25,17 +25,17 @@ references:
 
 ### Overview
 
-Röviden foglald össze, mit tartalmaz a lap és kinek szól (1–3 mondat).
+Briefly summarize what the paper contains and who it is for (1–3 sentences).
 
 ### Key Concepts
 
-- Pontos, tömör felsorolások
-- Egységes terminológia
-- Nyomtatásra optimalizált szerkezet
+- Accurate, concise lists
+- Consistent terminology
+- Print-optimized structure
 
 ### Cheats / Commands / Tables
 
-- Használj táblázatot, ha jól áttekinthető:
+- Use a table if it is easy to understand:
   
 | Command | Meaning |
 |---|---|
@@ -51,9 +51,9 @@ sample --option value
 
 ### Notes
 
-- Legyen 1–2 A4 oldal
-- Ne használj felesleges díszítést
-- Hivatkozásokat a “References” részbe tedd
+- Keep it to 1–2 A4 pages
+- Avoid unnecessary embellishments
+- Include references in the “References” section
 
 ### References
 

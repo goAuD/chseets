@@ -53,4 +53,4 @@ High-level goals and planned milestones for the open platform.
 
 ---
 
-_Last updated: 2025-10-21
+_Last updated: 2025-10-21_

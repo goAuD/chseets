@@ -55,4 +55,4 @@ npx swagger-cli validate docs/api/openapi.yaml
 npx markdownlint-cli2 "**/*.md" --config .markdownlint.json
 ```
 
-Last updated: 2025-10-21
+_Last updated: 2025-10-21_

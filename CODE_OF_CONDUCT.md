@@ -78,4 +78,4 @@ For answers to common questions about this code of conduct, see:
 
 ---
 
-_Last updated: 2025-10-21
+_Last updated: 2025-10-21_

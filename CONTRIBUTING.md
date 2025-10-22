@@ -129,3 +129,5 @@ and the repository contributors list.
 - For sensitive topics (security/privacy), follow SECURITY.md.
 
 ---
+
+_Last updated: 2025-10-21_

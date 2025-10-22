@@ -56,4 +56,4 @@ git merge main
 
 > Always resolve conflicts locally before pushing.
 
-Last updated: 2025-10-21
+_Last updated: 2025-10-21_
