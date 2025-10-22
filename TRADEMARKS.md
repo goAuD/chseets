@@ -58,10 +58,12 @@ If you build upon or extend chseets, choose names that clearly distinguish your
 work:
 
 ✅ Acceptable  
+
 - “MyApp for chseets”  
 - “CheatKit - powered by chseets API”
 
 ❌ Not acceptable  
+
 - “chseets Pro”  
 - “Official chseets Extension”
 

@@ -51,6 +51,7 @@ Run:
 ```bash
 node tools/validate-sheets.mjs
 ```
+
 > If successful, you’ll see:
 
 ```css

@@ -1,15 +1,8 @@
 {
   "default": true,
-  "MD034": false,
-  "MD029": false,
-  "MD032": false,
-  "MD036": false,
-  "MD025": false,
-  "MD007": { "indent": 2, "start_indented": false },
-  "MD003": { "style": "consistent" },
-  "MD022": false,
-  "MD041": false,
   "MD013": false,
-  "MD033": false,
-  "MD012": false
+  "MD007": { "indent": 2 },
+  "MD031": true,
+  "MD047": true,
+  "MD049": false
 }
