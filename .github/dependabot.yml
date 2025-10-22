@@ -1,8 +1,11 @@
+## FILE: .github/dependabot.yml
+# Dependabot for GitHub Actions updates only (no package.json needed)
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
-    assignees: ["goAuD"]
+    assignees:
+      - "goAuD"
