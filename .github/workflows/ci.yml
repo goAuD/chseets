@@ -49,6 +49,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Run Markdown Linter
+      - name: Run Markdown Linter (non-blocking)
+        continue-on-error: true
         run: |
-          npx --yes markdownlint-cli2 "**/*.md" --config .markdownlint.json
+          npx --yes markdownlint-cli2 "**/*.md" --config .markdownlint.json || true

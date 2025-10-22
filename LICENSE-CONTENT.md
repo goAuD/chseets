@@ -41,6 +41,7 @@ credit is given.  For the full legal text, please refer to:
 ====================================================================
 Attribution notice
 ------------------
+
 Content within this repository - including cheat sheets, examples, and
 documentation — is © 2025 chseets Team and individual contributors and
 licensed under the Creative Commons Attribution 4.0 International License.

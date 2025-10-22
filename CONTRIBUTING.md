@@ -98,9 +98,9 @@ references:
 ## Commit & PR conventions
 
 - Use Conventional Commits where possible:
-    - feat(sheet): add qbasic-basics
-    - fix(sheet): correct PRINT USING examples
-    - docs: update authoring rules
+  - feat(sheet): add qbasic-basics
+  - fix(sheet): correct PRINT USING examples
+  - docs: update authoring rules
 - Keep PRs focused and small.
 - CI must pass (lint, schema, link checks) before merge.
 

@@ -20,7 +20,7 @@ Guidelines for creating clear, consistent, and readable cheat sheets.
 | **Headings** | use `#`, `##`, `###` hierarchy |
 | **Lists** | short, parallel structure |
 | **Tables** | keep within A4 width; use code font for literals |
-| **Code blocks** | specify language (```bash, ```sql, …) |
+| **Code blocks** | specify language (```bash,```sql, …) |
 | **Emphasis** | use `**bold**` sparingly; avoid all caps |
 | **Links** | always in Markdown format – e.g. [https://chseets.com](https://chseets.com) |
 
