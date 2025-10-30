@@ -12,8 +12,8 @@ on:
       - ".markdownlint*"
 
 jobs:
-  markdownlint:            # <-- Ezt a nevet írd majd a Required checks-hez
-    name: markdownlint     # <-- A státusz check pontos megjelenő neve
+  markdownlint:
+    name: markdownlint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
