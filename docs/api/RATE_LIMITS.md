@@ -8,7 +8,7 @@ allowing reasonable open access for developers and educators.
 
 ---
 
-## 1. General policy
+## General policy
 
 - All requests are subject to fair-use monitoring.
 - Excessive or automated scraping will trigger throttling or temporary bans.
@@ -17,7 +17,7 @@ allowing reasonable open access for developers and educators.
 
 ---
 
-## 2. Global limits
+## Global limits
 
 | Limit type | Value | Scope | Notes |
 |-------------|--------|--------|-------|
@@ -29,7 +29,7 @@ allowing reasonable open access for developers and educators.
 If limits are exceeded, the server returns **HTTP 429 Too Many Requests** with a
 `Retry-After` header (in seconds).
 
-**Example**
+## Example
 
 ```js
 HTTP/1.1 429 Too Many Requests
@@ -44,7 +44,7 @@ Content-Type: application/json
 }
 ```
 
-## 3. Endpoint-specific hints
+## Endpoint-specific hints
 
 | Endpoint             | Typical usage     | Suggested delay         |
 | -------------------- | ----------------- | ----------------------- |
@@ -55,7 +55,7 @@ Content-Type: application/json
 
 ---
 
-## 4. Caching guidelines
+## Caching guidelines
 
 - To minimize load and improve performance:
 - Use ETag or Last-Modified headers to avoid repeated downloads.
@@ -63,7 +63,7 @@ Content-Type: application/json
 - Cache metadata (/meta) for 10–30 minutes.
 - Avoid background polling; use manual refresh or conditional requests.
 
-## 5. Identification
+## Identification
 
 Always send a User-Agent header that identifies your app or library.
 
@@ -75,7 +75,7 @@ User-Agent: myapp/1.0 (contact@example.com)
 
 Requests without identification may be deprioritized.
 
-## 6. Abuse handling
+## Abuse handling
 
 Excessive or abusive behavior includes:
 
@@ -84,8 +84,10 @@ Excessive or abusive behavior includes:
 - Using fake or rotating IPs to bypass limits
 - Automated redistribution of the full dataset
 
-> **Violations may lead to temporary or permanent IP blocking.**
+---
 
+> **Violations may lead to temporary or permanent IP blocking.**
+---
 > For legitimate high-volume use (e.g., research, education, integration),
 contact the maintainers via the email listed in SECURITY.md or on
 [https://chseets.com/about/](https://chseets.com/about/)
