@@ -30,6 +30,7 @@ Please also read our **CODE_OF_CONDUCT.md**.
 ## Authoring a new sheet
 
 1. **Create file**
+
    - Copy the template: `/templates/sheet-template.md`
    - Place it under: `/sheets/<topic>/<slug>.md`
    - Slug: lowercase, hyphenated, ASCII only (e.g., `qbasic-basics.md`)
@@ -54,6 +55,8 @@ print:
 references:
     - "Official docs or canonical source URL"
 ```
+
+---
 
 ## **Write the content**
 

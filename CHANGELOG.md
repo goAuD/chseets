@@ -15,10 +15,14 @@ Semantic Versioning.
 - API overview and OpenAPI schema
 - Trademark, Brand, and License files
 
+---
+
 ## Changed
 
 - Adjusted print layout defaults
 - Unified Montserrat typography guidelines
+
+---
 
 ## Fixed
 
@@ -35,3 +39,5 @@ Semantic Versioning.
 - Code under Apache-2.0  
 - Content under CC BY 4.0  
 - Brand & trademark officially defined
+
+---

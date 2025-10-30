@@ -13,10 +13,10 @@ All sheets must:
 
 ## 1. File location & naming
 
-/sheets/<topic>/<slug>.md
+`/sheets/<topic>/<slug>`.md
 
-- `<topic>` — a logical folder, e.g. `programming`, `networking`, `design`
-- `<slug>` — lowercase, hyphen-separated ASCII (e.g. `qbasic-basics`)
+- `<topic>` - a logical folder, e.g. `programming`, `networking`, `design`
+- `<slug>` - lowercase, hyphen-separated ASCII (e.g. `qbasic-basics`)
 - Each file represents one self-contained printable sheet.
 
 ---
@@ -57,11 +57,13 @@ Section Title
 Short introduction (1–3 sentences).
 
 Key Concepts
+
 - Bullet points
 - Code snippets
 - Tables (fit within A4 width)
 
 Examples
+
 ```bash
 echo "Hello, World!"
 ```
@@ -69,6 +71,8 @@ echo "Hello, World!"
 Notes
 
 Use brief hints or gotchas.
+
+---
 
 ## References
 
