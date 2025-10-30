@@ -8,11 +8,11 @@ Please also read our **CODE_OF_CONDUCT.md**.
 
 ## Ways to contribute
 
-- ✍️ Add a new cheat sheet
-- 🧹 Improve an existing sheet (accuracy, clarity, layout)
-- 🔎 Fix links, typos, formatting
-- 🧪 Add tests/validators for sheet metadata and links
-- 🧰 Improve build/dev tooling or documentation
+- Add a new cheat sheet
+- Improve an existing sheet (accuracy, clarity, layout)
+- Fix links, typos, formatting
+- Add tests/validators for sheet metadata and links
+- Improve build/dev tooling or documentation
 
 ---
 
@@ -55,19 +55,19 @@ references:
     - "Official docs or canonical source URL"
 ```
 
-3. **Write the content**
+## **Write the content**
 
 - Structure with clear headings and short lists/tables.
 - Avoid long paragraphs; optimize for print readability.
 - Keep line length sensible; avoid hard-wrapping tables.
 
-4. **Validate locally (if tools are available)**
+**Validate locally (if tools are available)**
 
 - Run schema check: node tools/validate-sheets.mjs
 - Run link check: node tools/linkcheck.mjs
 - Ensure the sheet renders cleanly in print preview (A4, 100%)
 
-5. **Open a Pull Request**
+**Open a Pull Request**
 
 - Fill the PR template and link related issues
 - Provide a brief rationale and sources

@@ -52,25 +52,25 @@ Below the YAML front matter:
 
 ```markdown
 
-# Section Title
+Section Title
 
 Short introduction (1–3 sentences).
 
-# Key Concepts
+Key Concepts
 - Bullet points
 - Code snippets
 - Tables (fit within A4 width)
 
-# Examples
+Examples
 ```bash
 echo "Hello, World!"
 ```
 
-# Notes
+Notes
 
 Use brief hints or gotchas.
 
-# References
+## References
 
 [https://example.com/](https://example.com/)
 [https://example.org/](https://example.org/)

@@ -1,12 +1,13 @@
-# FILE: LICENSE-CONTENT
+FILE: LICENSE-CONTENT
 
 Creative Commons Attribution 4.0 International (CC BY 4.0)
 [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
 
 ====================================================================
 
-## Official summary (non-legal)
--------------------------------
+Official summary (non-legal)
+
+----------------------------
 You are free to:
 
 - **Share** - copy and redistribute the material in any medium or format
@@ -19,8 +20,8 @@ Under the following terms:
   license, and indicate if changes were made. You may do so in any reasonable
   manner, but not in any way that suggests the licensor endorses you or your use.
 
-# No additional restrictions - You may not apply legal terms or technological
-# measures that legally restrict others from doing anything the license permits
+No additional restrictions - You may not apply legal terms or technological
+measures that legally restrict others from doing anything the license permits
 ====================================================================
 
 Full legal text
