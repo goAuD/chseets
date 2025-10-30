@@ -6,4 +6,5 @@ dist/
 .github/PULL_REQUEST_TEMPLATE.md
 .github/ISSUE_TEMPLATE/**
 BRAND_GUIDE.md
+CHANGELOG.md
 **/*.zip
