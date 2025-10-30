@@ -8,19 +8,19 @@ Semantic Versioning.
 
 ## [Unreleased]
 
-### Added
+## Added
 
 - Initial repository setup and structure
 - Base documentation (README, CONTRIBUTING, SPEC)
 - API overview and OpenAPI schema
 - Trademark, Brand, and License files
 
-### Changed
+## Changed
 
 - Adjusted print layout defaults
 - Unified Montserrat typography guidelines
 
-### Fixed
+## Fixed
 
 - Minor schema validation corrections
 
