@@ -1,3 +1,7 @@
 LICENSE-CODE
 LICENSE-CONTENT
+node_modules/
+public/
+dist/
+**/*.zip
 
