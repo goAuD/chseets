@@ -1,0 +1,19 @@
+{
+  // Melyik fájlokat nézze
+  "globs": [
+    "**/*.md"
+  ],
+  
+  // Melyik fájlokat NE nézze
+  "ignores": [
+    "node_modules/**",
+    "**/node_modules/**"
+  ],
+  
+  // Szabályok finomhangolása (opcionális)
+  "config": {
+    "default": true,
+    "MD033": false,  // HTML engedélyezése
+    "MD013": false   // Sor hossz korlát kikapcsolása
+  }
+}
