@@ -93,8 +93,8 @@ endorsement.
 
 ## Links
 
-- Sheets: <https://chseets.com/sheets/>
-- About:  <https://chseets.com/about/>
-- API:    <https://chseets.com/api/>
+- Sheets: [https://chseets.com/sheets/](https://chseets.com/sheets/)
+- About:  [https://chseets.com/about/](https://chseets.com/about/)
+- API:    [https://chseets.com/api/](https://chseets.com/api/)
 
 _Last updated: 2025-10-21_
