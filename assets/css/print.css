@@ -1,0 +1,7 @@
+@page{size:A4;margin:14mm}*{box-sizing:border-box}
+html,body{background:#fff!important;color:#000!important;font-family:Montserrat,system-ui,sans-serif;font-size:12pt;line-height:1.35}
+header,footer{display:none}.sheet{width:100%;display:grid;grid-template-columns:1fr 1fr;grid-gap:10px}
+.h1{font-weight:700;font-size:20pt;margin:0 0 8px}.h2{font-weight:600;font-size:13pt;margin:12px 0 6px}
+.card{border:1px solid #111;padding:8px;border-radius:6px}.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10pt;background:#111;color:#fafafa;padding:6px;border-radius:4px;white-space:pre-wrap}
+.small{font-size:9pt;opacity:.8}.separator{height:1px;background:#111;margin:10px 0}
+@media screen{body{background:#0c0f13;color:#d5dde1;padding:24px}a{color:#ffb020}}

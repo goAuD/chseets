@@ -97,4 +97,25 @@ endorsement.
 - About:  [https://chseets.com/about/](https://chseets.com/about/)
 - API:    [https://chseets.com/api/](https://chseets.com/api/)
 
-_Last updated: 2025-10-21_
+---
+
+## Deployment
+
+**Live site:** [https://chseets.com](https://chseets.com)
+
+**Tech stack:**
+
+- Frontend: Vanilla JS + CSS (WASD design system)
+- Backend: Supabase (auth, storage, database)
+- Hosting: Caddy webserver (Debian)
+- PWA: Service worker + manifest.json
+
+**Local development:**
+
+1. Clone the repo
+2. Open `index.html` in a browser (or use a local server)
+3. No build step required - static files only
+
+---
+
+_Last updated: 2025-11-03_
