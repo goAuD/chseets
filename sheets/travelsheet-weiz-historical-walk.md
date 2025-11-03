@@ -14,7 +14,7 @@
 
 ### 🗺 Core Route
 
-1. **Start — Hauptplatz Fountain**  
+1. **Start - Hauptplatz Fountain**  
    Morning light, market chatter, coffee aroma. A good breath before the path.
 2. **City Parish Church (St. Theresia)**  
    Baroque calm under soft bells. Notice the carved angels on the gate.
@@ -82,7 +82,7 @@
 
 ---
 
-### 🔗 References
+### References
 
 - [City of Weiz Tourism](https://www.weiz.at/tourismus)  
 - [OpenStreetMap - Weiz](https://www.openstreetmap.org/#map=15/47.216/15.617)  

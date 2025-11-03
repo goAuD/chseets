@@ -14,7 +14,7 @@
 
 ### 🗺 Core Route
 
-1. **Start — Thannhausen Castle Courtyard**  
+1. **Start - Thannhausen Castle Courtyard**  
    The heart of the village. Ivy on pale walls, wrought-iron lanterns, and the slow toll of the bell tower.  
    _Take a moment before you walk - the air is different here._
 2. **Parish Church of St. Anna**  
@@ -102,5 +102,5 @@
 
 ### Closing note
 
-> _“Not every secret wants to stay hidden —  
+> _“Not every secret wants to stay hidden -  
 > some just wait for softer footsteps.”_

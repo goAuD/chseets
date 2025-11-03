@@ -13,7 +13,7 @@
 
 ---
 
-### ⚙️ Core Steps
+### Core Steps
 
 1. **Install the app** - App Store → ChatGPT by OpenAI (verified publisher).  
 2. **Sign in** - use the same account you use on desktop for sync.  
@@ -25,7 +25,7 @@
 
 ---
 
-### 🔍 Useful toggles
+### Useful toggles
 
 - Dark mode → easier at night, less eye fatigue.  
 - Haptic feedback → subtle grounding cue while typing.  
@@ -36,7 +36,7 @@
 
 ---
 
-### 💡 Tips & Tricks
+### Tips & Tricks
 
 - Use the **“+ Attachments”** icon to upload screenshots or PDFs.  
 - Say “Continue from here” - it remembers tone and context.  
@@ -46,7 +46,7 @@
 
 ---
 
-### 🧘 Tiny Breathers
+### Tiny Breathers
 
 - _“Silence is also input.”_  
 - _“Let your question form fully before sending.”_  
@@ -54,7 +54,7 @@
 
 ---
 
-### 🧠 Common Pitfalls
+### Common Pitfalls
 
 | Symptom | Likely cause | Quick reset |
 |----------|--------------|-------------|
@@ -65,7 +65,7 @@
 
 ---
 
-### 🔗 References
+### References
 
 - [ChatGPT Help Center](https://help.openai.com)  
 - [iOS Permissions Guide](https://support.apple.com/ios/permissions)  
@@ -81,6 +81,6 @@
 
 ---
 
-### 🌿 Closing note
+### Closing note
 
 > _“Tech becomes peace when you slow down enough to notice it working.”_
