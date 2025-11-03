@@ -13,13 +13,13 @@ const elSignout     = document.querySelector('[data-action="signout"]');
 const elsUser       = document.querySelectorAll('[data-slot="user"]');
 const elUploadForm  = document.querySelector('#upload-form');
 const elDropzone    = document.getElementById('dropzone');
-const elMyFiles     = document.querySelector('#my-files');     // profil lista
-const elDlList      = document.querySelector('#dl-list');      // nyitóoldali "downloads"
-const elSheetsList  = document.querySelector('#sheets-list');  // /sheets/ galéria
+const elMyFiles     = document.querySelector('#my-files');
+const elDlList      = document.querySelector('#dl-list');
+const elSheetsList  = document.querySelector('#sheets-list');
 
 /* ---------------- Helpers ---------------- */
 const human = (n)=>{ if(n==null)return''; const u=['B','KB','MB','GB']; let i=0; while(n>1024&&i<u.length-1){n/=1024;i++;} return `${n.toFixed(1)} ${u[i]}`; };
-const prettyName = (name)=> name.replace(/^\d{10,}[_\-]/,''); // levágja a timestamp_ részt
+const prettyName = (name)=> name.replace(/^\d{10,}[_\-]/,'');
 const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
 
 /* ---------------- User UI ---------------- */
@@ -51,11 +51,11 @@ async function updateSession(){
 initSession();
 
 /* ---------------- Global delete sync (event + cross-tab) ---------------- */
-// 1) Oldal-közti esemény: bármely oldalról triggerelhető
+
 window.addEventListener('sheet:deleted', (e) => {
   const { path, fileName } = e.detail || {};
 
-  // Távolíts el kártyákat attribútum alapján
+
   if (path) {
     document.querySelectorAll(`[data-path="${path}"]`).forEach(n => n.remove());
   }
@@ -64,7 +64,7 @@ window.addEventListener('sheet:deleted', (e) => {
     document.querySelectorAll(`[data-name="${clean}"]`).forEach(n => n.remove());
   }
 
-  // Listák újratöltése, ha jelen vannak
+
   if (document.querySelector('#my-files')) {
     supabase.auth.getUser().then(({ data:{ user } }) => { if (user) listMyFiles(user); });
   }
@@ -77,10 +77,10 @@ window.addEventListener('sheet:deleted', (e) => {
   }
 });
 
-// 2) Cross-tab sync a localStorage 'storage' eventtel
+
 window.addEventListener('storage', (e) => {
   if (e.key === 'sheet:deleted') {
-    // minden releváns lista frissítése
+
     if (typeof listPublic === 'function') listPublic();
     supabase.auth.getUser().then(({ data:{ user } }) => { if (user) listMyFiles(user); });
     if (typeof listSheets === 'function') listSheets();
@@ -141,7 +141,7 @@ async function listPublic(){
 }
 listPublic();
 
-/* ---------------- /sheets/ oldal: csak publikált + preview ---------------- */
+
 async function listSheets(){
   if (!elSheetsList) return;
   try{
@@ -191,7 +191,7 @@ async function makePublic(path, cleanName){
   const { error:copyErr } = await supabase.storage.from('sheets').copy(path, publicPath);
   if (copyErr) throw copyErr;
 
-  // 2) preview készítése (kép => saját fájl; PDF => első oldal PNG)
+
   const ext = fileName.split('.').pop().toLowerCase();
   let previewPath = null;
   if (['png','jpg','jpeg','webp','gif','avif'].includes(ext)) {
@@ -229,7 +229,7 @@ async function makePublic(path, cleanName){
   if (metaErr) throw metaErr;
 }
 
-/* ------------ PDF első oldal -> PNG Blob (preview) ------------ */
+/* ------------ PDF -> PNG Blob (preview) ------------ */
 async function renderPdfFirstPageToPng(inputBlob){
   const pdfjs = await import(PDFJS_CDN);
   if (!pdfjs.GlobalWorkerOptions?.workerSrc) {
@@ -312,7 +312,7 @@ document.addEventListener('click', async (e)=>{
     const slug = fileName.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const previewPath = `public/previews/${slug}.png`;
 
-    // 1) Storage: fő fájl törlése
+    // 1) Storage
     try {
       const { error: storageErr } = await supabase.storage.from('sheets').remove([path]);
       if (storageErr){
@@ -325,7 +325,7 @@ document.addEventListener('click', async (e)=>{
       return;
     }
 
-    // 2) DB meta: publik meta sor törlése (ha volt publish)
+    // 2) DB meta
     try {
       const { error: dbErr } = await supabase.from('sheets_meta')
         .delete()
@@ -348,7 +348,7 @@ document.addEventListener('click', async (e)=>{
       console.error('Unexpected preview remove error:', err);
     }
 
-    // 4) Globális esemény + cross-tab jelzés
+  
     try {
       const deleteEvent = new CustomEvent('sheet:deleted', {
         detail: { path, publicPath, fileName, previewPath }
@@ -357,7 +357,7 @@ document.addEventListener('click', async (e)=>{
       try { localStorage.setItem('sheet:deleted', JSON.stringify({ path, ts: Date.now() })); }
       catch(e){ console.warn('localStorage set failed', e); }
     } finally {
-      // 5) Helyi kártya eltávolítása (azonnali UX)
+
       card.remove();
     }
     return;
@@ -372,7 +372,7 @@ document.addEventListener('click', async (e)=>{
     try{
       await makePublic(path, clean);
       alert('Published to /sheets (public).');
-      // opcionálisan /sheets/ frissítés
+
       if (elSheetsList) listSheets();
     }catch(err){
       alert(`Publish failed: ${err.message}`);
@@ -420,7 +420,7 @@ supabase.auth.onAuthStateChange((event, session)=>{
   }
 });
 
-// Hash callback után biztos ami biztos
+// Hash callback
 if (window.location.hash){
   setTimeout(() => { updateSession(); }, 500);
 }

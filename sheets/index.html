@@ -149,7 +149,7 @@
     render();
   });
   load();
-  // ... a meglévő /sheets/ inline modulod alján, a load()/render() után:
+
   window.addEventListener('sheet:deleted', () => load());
   window.addEventListener('storage', (e) => {
     if (e.key === 'sheet:deleted') load();

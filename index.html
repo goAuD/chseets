@@ -126,7 +126,7 @@
     }).join('');
   }
 
-  // ÚJ: egyetlen aszinkron lekérés, amit később újra tudsz hívni
+  //
   async function fetchHero() {
     const { data } = await supabase
       .from('sheets_meta')
@@ -138,10 +138,10 @@
     render();
   }
 
-  // 🔹 Itt hívd meg — ez váltja ki a régi (async IIFE) azonnali lekérést
+  //
   fetchHero();
 
-  // 🔹 És ez alá jöjjenek az esemény-listenerek
+  //
   window.addEventListener('sheet:deleted', fetchHero);
   window.addEventListener('storage', (e) => {
     if (e.key === 'sheet:deleted') fetchHero();
