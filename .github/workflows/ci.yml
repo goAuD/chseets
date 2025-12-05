@@ -16,7 +16,7 @@ env:
 jobs:
   # Job 1: Validate JSON & OpenAPI files
   validate:
-    name: Validate JSON & OpenAPI
+    name: JSON & OpenAPI validate
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
