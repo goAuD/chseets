@@ -1,9 +1,26 @@
 {
+  "name": "chseets",
+  "version": "1.0.0",
+  "description": "Printable cheat sheets for all - A clean, distraction-free collection of PWA-ready study guides",
+  "type": "module",
+  "private": true,
+  "author": "chseets contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goAuD/chseets.git"
+  },
   "devDependencies": {
+    "ajv": "^8.17.1",
+    "http-server": "^14.1.1",
     "markdownlint-cli2": "^0.19.0"
   },
   "scripts": {
+    "start": "http-server web -p 8000 -c-1 --cors",
+    "serve": "http-server web -p 8000 -c-1",
     "lint:md": "markdownlint-cli2 \"**/*.md\"",
-    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\""
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\"",
+    "validate": "npm run lint:md && node tools/validate-sheets.mjs",
+    "check-links": "node tools/linkcheck.mjs"
   }
 }
