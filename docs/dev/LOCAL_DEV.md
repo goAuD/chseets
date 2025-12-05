@@ -26,7 +26,8 @@ For browser preview:
 npx serve .
 ```
 
-Then open [http://localhost:3000](http://localhost:3000/)
+Then open `http://localhost:3000` in your browser
+<!-- Note: localhost link is for local development only, not validated in CI -->
 
 ---
 

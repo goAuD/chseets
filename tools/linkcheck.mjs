@@ -9,8 +9,14 @@ import { execSync } from "child_process";
 const root = process.cwd();
 const files = [];
 
+// Directories to exclude from link checking
+const excludeDirs = ["node_modules", ".git", ".github", "build", "dist"];
+
 function walk(dir) {
   for (const entry of fs.readdirSync(dir)) {
+    // Skip excluded directories
+    if (excludeDirs.includes(entry)) continue;
+    
     const full = path.join(dir, entry);
     if (fs.statSync(full).isDirectory()) walk(full);
     else if (full.endsWith(".md")) files.push(full);
