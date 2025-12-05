@@ -3,47 +3,47 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const PDFJS_CDN = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
 
 /* ---------------- Supabase ---------------- */
-const SUPABASE_URL  = "https://zpvqcjrtsbznaaphjhug.supabase.co";
+const SUPABASE_URL = "https://zpvqcjrtsbznaaphjhug.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdnFjanJ0c2J6bmFhcGhqaHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MjM3MDcsImV4cCI6MjA3NjE5OTcwN30.pICNfmmQTvXz-TcLHTFI5EaXWtVV_DUGK7wjufVFjuc";
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
 
 /* ---------------- DOM ---------------- */
-const elSignin      = document.querySelector('[data-action="signin"]');
-const elSignout     = document.querySelector('[data-action="signout"]');
-const elsUser       = document.querySelectorAll('[data-slot="user"]');
-const elUploadForm  = document.querySelector('#upload-form');
-const elDropzone    = document.getElementById('dropzone');
-const elMyFiles     = document.querySelector('#my-files');     // profil lista
-const elDlList      = document.querySelector('#dl-list');      // nyitóoldali "downloads"
-const elSheetsList  = document.querySelector('#sheets-list');  // /sheets/ galéria
+const elSignin = document.querySelector('[data-action="signin"]');
+const elSignout = document.querySelector('[data-action="signout"]');
+const elsUser = document.querySelectorAll('[data-slot="user"]');
+const elUploadForm = document.querySelector('#upload-form');
+const elDropzone = document.getElementById('dropzone');
+const elMyFiles = document.querySelector('#my-files');     // profil lista
+const elDlList = document.querySelector('#dl-list');      // nyitóoldali "downloads"
+const elSheetsList = document.querySelector('#sheets-list');  // /sheets/ galéria
 
 /* ---------------- Helpers ---------------- */
-const human = (n)=>{ if(n==null)return''; const u=['B','KB','MB','GB']; let i=0; while(n>1024&&i<u.length-1){n/=1024;i++;} return `${n.toFixed(1)} ${u[i]}`; };
-const prettyName = (name)=> name.replace(/^\d{10,}[_\-]/,''); // levágja a timestamp_ részt
-const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
+const human = (n) => { if (n == null) return ''; const u = ['B', 'KB', 'MB', 'GB']; let i = 0; while (n > 1024 && i < u.length - 1) { n /= 1024; i++; } return `${n.toFixed(1)} ${u[i]}`; };
+const prettyName = (name) => name.replace(/^\d{10,}[_\-]/, ''); // levágja a timestamp_ részt
+const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 80);
 
 /* ---------------- User UI ---------------- */
-function renderUser(user){
+function renderUser(user) {
   elsUser.forEach(el => el.textContent = user ? user.email : "Guest");
-  if (elSignin)  elSignin.style.display  = user ? "none"        : "inline-flex";
+  if (elSignin) elSignin.style.display = user ? "none" : "inline-flex";
   if (elSignout) elSignout.style.display = user ? "inline-flex" : "none";
 }
-async function initSession(){
-  try{
-    const { data:{ session } } = await supabase.auth.getSession();
+async function initSession() {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
     const user = session?.user ?? null;
     renderUser(user);
     if (user) listMyFiles(user);
-  }catch(err){
+  } catch (err) {
     console.error('Session init error:', err);
   }
 }
-async function updateSession(){
-  try{
-    const { data:{ user } } = await supabase.auth.getUser();
+async function updateSession() {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
     renderUser(user ?? null);
     if (user) listMyFiles(user);
-  }catch(err){
+  } catch (err) {
     console.error('Update session error:', err);
     renderUser(null);
   }
@@ -60,20 +60,21 @@ window.addEventListener('sheet:deleted', (e) => {
     document.querySelectorAll(`[data-path="${path}"]`).forEach(n => n.remove());
   }
   if (fileName) {
-    const clean = fileName.replace(/^\d{10,}[_\-]/,'');
+    const clean = fileName.replace(/^\d{10,}[_\-]/, '');
     document.querySelectorAll(`[data-name="${clean}"]`).forEach(n => n.remove());
   }
 
   // Listák újratöltése, ha jelen vannak
-  if (document.querySelector('#my-files')) {
-    supabase.auth.getUser().then(({ data:{ user } }) => { if (user) listMyFiles(user); });
-  }
+  // Listák frissítése (de ne töltsük újra, ha csak a sajátunkat töröltük - a DOM removal már megtörtént)
+  // A 'storage' event majd frissít más tabokat. Helyben elég a DOM remove.
+  // Kivétel: ha Public lista van (dl-list), azt frissíteni kellhet.
   if (document.querySelector('#dl-list')) {
     listPublic();
   }
   if (document.querySelector('#sheets-list')) {
-    if (typeof listSheets === 'function') listSheets();
-    else listPublic();
+    // A sheets-list (galéria) teljes újratöltése esetleg visszahozhatja, ha a DB még nem konzisztens.
+    // Hagyjuk a DOM törlést érvényesülni, csak késleltetve frissítsünk ha nagyon muszáj.
+    // Most inkább kivesszük az automatikus újratöltést helyi törlésnél.
   }
 });
 
@@ -82,26 +83,26 @@ window.addEventListener('storage', (e) => {
   if (e.key === 'sheet:deleted') {
     // minden releváns lista frissítése
     if (typeof listPublic === 'function') listPublic();
-    supabase.auth.getUser().then(({ data:{ user } }) => { if (user) listMyFiles(user); });
+    supabase.auth.getUser().then(({ data: { user } }) => { if (user) listMyFiles(user); });
     if (typeof listSheets === 'function') listSheets();
   }
 });
 
 /* ---------------- My files (profile) ---------------- */
-async function listMyFiles(user){
+async function listMyFiles(user) {
   if (!elMyFiles) return;
-  try{
+  try {
     const prefix = `uploads/${user.id}`;
     const { data, error } = await supabase.storage.from('sheets').list(prefix, { limit: 200 });
     if (error) throw error;
 
-    if (!data?.length){ elMyFiles.innerHTML = `<div class="small">No files yet.</div>`; return; }
+    if (!data?.length) { elMyFiles.innerHTML = `<div class="small">No files yet.</div>`; return; }
 
-    elMyFiles.innerHTML = data.map(f=>{
+    elMyFiles.innerHTML = data.map(f => {
       const clean = prettyName(f.name);
-      const { data:pub } = supabase.storage.from('sheets').getPublicUrl(`${prefix}/${f.name}`);
+      const { data: pub } = supabase.storage.from('sheets').getPublicUrl(`${prefix}/${f.name}`);
       const path = `${prefix}/${f.name}`;
-      const when = new Date(f.updated_at||Date.now()).toLocaleString();
+      const when = new Date(f.updated_at || Date.now()).toLocaleString();
       const size = human(f.metadata?.size ?? f.size);
       return `
         <div class="card-file" data-path="${path}" data-name="${clean}">
@@ -120,19 +121,19 @@ async function listMyFiles(user){
           </div>
         </div>`;
     }).join('');
-  }catch(err){
+  } catch (err) {
     elMyFiles.innerHTML = `<div class="small">Error: ${err.message}</div>`;
   }
 }
 
 /* ---------------- Public downloads (nyitóoldal) ---------------- */
-async function listPublic(){
+async function listPublic() {
   if (!elDlList) return;
   try {
     const { data, error } = await supabase.storage.from('sheets').list('public', { limit: 500 });
-    if (error){ elDlList.innerHTML = `<li class="small">Error: ${error.message}</li>`; return; }
-    elDlList.innerHTML = (data?.length ? data.map(f=>{
-      const { data:pub } = supabase.storage.from('sheets').getPublicUrl(`public/${f.name}`);
+    if (error) { elDlList.innerHTML = `<li class="small">Error: ${error.message}</li>`; return; }
+    elDlList.innerHTML = (data?.length ? data.map(f => {
+      const { data: pub } = supabase.storage.from('sheets').getPublicUrl(`public/${f.name}`);
       return `<li><a target="_blank" href="${pub.publicUrl}">${f.name}</a> <span class="small">(${human(f.size)})</span></li>`;
     }).join('') : '<li class="small">No downloads yet.</li>');
   } catch (err) {
@@ -142,9 +143,9 @@ async function listPublic(){
 listPublic();
 
 /* ---------------- /sheets/ oldal: csak publikált + preview ---------------- */
-async function listSheets(){
+async function listSheets() {
   if (!elSheetsList) return;
-  try{
+  try {
     const { data, error } = await supabase
       .from('sheets_meta')
       .select('id, title, slug, storage_path, preview_path, created_at')
@@ -153,23 +154,23 @@ async function listSheets(){
       .limit(200);
 
     if (error) throw error;
-    if (!data?.length){
+    if (!data?.length) {
       elSheetsList.innerHTML = `<div class="small">No sheets yet.</div>`;
       return;
     }
 
     elSheetsList.innerHTML = data.map(row => {
-      const title  = row.title;
-      const url    = `/sheets/${row.slug}`;
-      let preview  = '';
+      const title = row.title;
+      const url = `/sheets/${row.slug}`;
+      let preview = '';
       if (row.preview_path) {
-        const { data:pubPrev } = supabase.storage.from('sheets').getPublicUrl(row.preview_path);
+        const { data: pubPrev } = supabase.storage.from('sheets').getPublicUrl(row.preview_path);
         preview = pubPrev?.publicUrl || '';
       }
       return `
         <div class="card-file preview" data-storage="${row.storage_path}" data-slug="${row.slug}">
           <a class="thumb" href="${url}" target="_blank" rel="noopener">
-            ${ preview ? `<img src="${preview}" alt="${title}">` : `<div class="no-thumb">No preview</div>` }
+            ${preview ? `<img src="${preview}" alt="${title}">` : `<div class="no-thumb">No preview</div>`}
           </a>
           <div class="content">
             <div class="name"><a href="${url}" target="_blank" rel="noopener">${title}</a></div>
@@ -177,28 +178,28 @@ async function listSheets(){
         </div>
       `;
     }).join('');
-  }catch(err){
+  } catch (err) {
     elSheetsList.innerHTML = `<div class="small">Error: ${err.message}</div>`;
   }
 }
 if (elSheetsList) listSheets();
 
 /* ---------------- Make Public: copy -> preview -> meta insert ---------------- */
-async function makePublic(path, cleanName){
+async function makePublic(path, cleanName) {
   // 1) másolat a public/ alá
   const fileName = cleanName || path.split('/').pop();
   const publicPath = `public/${fileName}`;
-  const { error:copyErr } = await supabase.storage.from('sheets').copy(path, publicPath);
+  const { error: copyErr } = await supabase.storage.from('sheets').copy(path, publicPath);
   if (copyErr) throw copyErr;
 
   // 2) preview készítése (kép => saját fájl; PDF => első oldal PNG)
   const ext = fileName.split('.').pop().toLowerCase();
   let previewPath = null;
-  if (['png','jpg','jpeg','webp','gif','avif'].includes(ext)) {
+  if (['png', 'jpg', 'jpeg', 'webp', 'gif', 'avif'].includes(ext)) {
     previewPath = publicPath;
   } else if (ext === 'pdf') {
     try {
-      const slug = slugify(fileName.replace(/\.[^.]+$/,''));
+      const slug = slugify(fileName.replace(/\.[^.]+$/, ''));
       const { data: blobData, error: dlErr } =
         await supabase.storage.from('sheets').download(publicPath);
       if (dlErr) throw dlErr;
@@ -213,10 +214,10 @@ async function makePublic(path, cleanName){
   }
 
   // 3) meta insert
-  const { data:{ user } } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
   const row = {
-    slug: slugify(fileName.replace(/\.[^.]+$/,'')),
-    title: fileName.replace(/\.[^.]+$/,''),
+    slug: slugify(fileName.replace(/\.[^.]+$/, '')),
+    title: fileName.replace(/\.[^.]+$/, ''),
     description: '',
     tags: [],
     lang: 'en',
@@ -225,12 +226,12 @@ async function makePublic(path, cleanName){
     created_by: user?.id ?? null,
     published: true
   };
-  const { error:metaErr } = await supabase.from('sheets_meta').insert(row);
+  const { error: metaErr } = await supabase.from('sheets_meta').insert(row);
   if (metaErr) throw metaErr;
 }
 
 /* ------------ PDF első oldal -> PNG Blob (preview) ------------ */
-async function renderPdfFirstPageToPng(inputBlob){
+async function renderPdfFirstPageToPng(inputBlob) {
   const pdfjs = await import(PDFJS_CDN);
   if (!pdfjs.GlobalWorkerOptions?.workerSrc) {
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
@@ -247,7 +248,7 @@ async function renderPdfFirstPageToPng(inputBlob){
     const canvas = document.createElement('canvas');
     canvas.width = Math.round(vp.width);
     canvas.height = Math.round(vp.height);
-    const ctx = canvas.getContext('2d', { alpha:false });
+    const ctx = canvas.getContext('2d', { alpha: false });
 
     await page.render({ canvasContext: ctx, viewport: vp }).promise;
     const blob = await new Promise(res => canvas.toBlob(res, 'image/png', 0.92));
@@ -258,56 +259,56 @@ async function renderPdfFirstPageToPng(inputBlob){
 }
 
 /* ---------------- Upload helpers ---------------- */
-async function uploadFile(file){
-  const { data:{ user } } = await supabase.auth.getUser();
-  if (!user){ alert("Sign in first."); return { error: new Error("Not signed in") }; }
-  const safe = file.name.replace(/\s+/g,'_');
+async function uploadFile(file) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) { alert("Sign in first."); return { error: new Error("Not signed in") }; }
+  const safe = file.name.replace(/\s+/g, '_');
   const path = `uploads/${user.id}/${Date.now()}_${safe}`;
-  return await supabase.storage.from('sheets').upload(path, file, { upsert:false, contentType:file.type || undefined });
+  return await supabase.storage.from('sheets').upload(path, file, { upsert: false, contentType: file.type || undefined });
 }
-elUploadForm?.addEventListener('submit', async (e)=>{
+elUploadForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const files = Array.from(e.target.elements.file.files || []);
   if (!files.length) return;
-  for (const f of files){
+  for (const f of files) {
     const { error } = await uploadFile(f);
-    if (error){ alert(`Failed: ${f.name} — ${error.message}`); return; }
+    if (error) { alert(`Failed: ${f.name} — ${error.message}`); return; }
   }
   alert(`Uploaded ${files.length} file(s).`);
-  const { data:{ user } } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
   if (user) listMyFiles(user);
 });
 
 /* ---------------- Drag & drop ---------------- */
-if (elDropzone){
-  ['dragenter','dragover','dragleave','drop'].forEach(evt =>
+if (elDropzone) {
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt =>
     elDropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); })
   );
-  ['dragenter','dragover'].forEach(()=> elDropzone.classList.add('is-drag'));
-  ['dragleave','drop'].forEach(()=> elDropzone.classList.remove('is-drag'));
-  elDropzone.addEventListener('drop', async (e)=>{
+  ['dragenter', 'dragover'].forEach(() => elDropzone.classList.add('is-drag'));
+  ['dragleave', 'drop'].forEach(() => elDropzone.classList.remove('is-drag'));
+  elDropzone.addEventListener('drop', async (e) => {
     const files = Array.from(e.dataTransfer.files || []);
     if (!files.length) return;
-    for (const f of files){
+    for (const f of files) {
       const { error } = await uploadFile(f);
-      if (error){ alert(`Failed: ${f.name} — ${error.message}`); return; }
+      if (error) { alert(`Failed: ${f.name} — ${error.message}`); return; }
     }
     alert(`Uploaded ${files.length} file(s).`);
-    const { data:{ user } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     if (user) listMyFiles(user);
   });
 }
 
 /* ---------------- Click handlers ---------------- */
-document.addEventListener('click', async (e)=>{
+document.addEventListener('click', async (e) => {
   // Delete
   const del = e.target.closest('[data-action="delete-file"]');
-  if (del){
+  if (del) {
     const card = del.closest('[data-path]'); if (!card) return;
     const path = card.getAttribute('data-path');
     if (!confirm(`Delete this file?\n${path}`)) return;
 
-    const fileName  = path.split('/').pop();
+    const fileName = path.split('/').pop();
     const publicPath = `public/${fileName}`;
     const slug = fileName.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const previewPath = `public/previews/${slug}.png`;
@@ -315,7 +316,7 @@ document.addEventListener('click', async (e)=>{
     // 1) Storage: fő fájl törlése
     try {
       const { error: storageErr } = await supabase.storage.from('sheets').remove([path]);
-      if (storageErr){
+      if (storageErr) {
         alert(`Delete failed: ${storageErr.message}`);
         return;
       }
@@ -355,7 +356,7 @@ document.addEventListener('click', async (e)=>{
       });
       window.dispatchEvent(deleteEvent);
       try { localStorage.setItem('sheet:deleted', JSON.stringify({ path, ts: Date.now() })); }
-      catch(e){ console.warn('localStorage set failed', e); }
+      catch (e) { console.warn('localStorage set failed', e); }
     } finally {
       // 5) Helyi kártya eltávolítása (azonnali UX)
       card.remove();
@@ -365,16 +366,16 @@ document.addEventListener('click', async (e)=>{
 
   // Make Public
   const pub = e.target.closest('[data-action="make-public"]');
-  if (pub){
+  if (pub) {
     const card = pub.closest('[data-path]'); if (!card) return;
     const path = card.getAttribute('data-path');
     const clean = card.getAttribute('data-name');
-    try{
+    try {
       await makePublic(path, clean);
       alert('Published to /sheets (public).');
       // opcionálisan /sheets/ frissítés
       if (elSheetsList) listSheets();
-    }catch(err){
+    } catch (err) {
       alert(`Publish failed: ${err.message}`);
     }
     return;
@@ -384,43 +385,43 @@ document.addEventListener('click', async (e)=>{
   const t = e.target.closest('[data-action]');
   if (!t) return;
   const act = t.getAttribute('data-action');
-  if (act === 'signin'){
+  if (act === 'signin') {
     const email = prompt("Enter your email for a magic link:");
     if (!email) return;
-    try{
+    try {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: { emailRedirectTo: `${location.origin}/profile/` }
       });
       if (error) throw error;
       alert("Magic link sent! Check your inbox and click the link to sign in.");
-    }catch(err){
+    } catch (err) {
       alert(`Sign in failed: ${err.message}`);
     }
   }
-  if (act === 'signout'){
-    try{
+  if (act === 'signout') {
+    try {
       await supabase.auth.signOut();
       await updateSession();
-    }catch(err){
+    } catch (err) {
       console.error('Sign out error:', err);
     }
   }
 });
 
 /* ---------------- Auth change / Magic link ---------------- */
-supabase.auth.onAuthStateChange((event, session)=>{
+supabase.auth.onAuthStateChange((event, session) => {
   const user = session?.user ?? null;
   renderUser(user);
-  if (user){
+  if (user) {
     listMyFiles(user);
-    if (event === 'SIGNED_IN'){
+    if (event === 'SIGNED_IN') {
       console.log('Successfully signed in as:', user.email);
     }
   }
 });
 
 // Hash callback után biztos ami biztos
-if (window.location.hash){
+if (window.location.hash) {
   setTimeout(() => { updateSession(); }, 500);
 }
