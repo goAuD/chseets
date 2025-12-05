@@ -95,7 +95,7 @@ jobs:
           echo "✓ Build metadata generated"
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: build/
@@ -180,7 +180,7 @@ jobs:
           echo "✓ Deployment record created"
 
       - name: Upload build to artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: deployment-package-${{ github.sha }}
           path: chseets-build.tar.gz
@@ -240,7 +240,7 @@ jobs:
           cat deployment-summary.txt
 
       - name: Save summary
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: deployment-summary
           path: deployment-summary.txt
