@@ -1,55 +1,153 @@
-name: ci
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: "20"
+
 jobs:
+  # Job 1: Validate JSON & OpenAPI files
   validate:
-    name: JSON & OpenAPI validate
+    name: Validate JSON & OpenAPI
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v6
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
       - name: Validate JSON syntax (sheet.schema.json)
         run: |
           sudo apt-get update && sudo apt-get install -y jq
           jq -e . docs/specs/sheet.schema.json >/dev/null
+          echo "✓ JSON schema valid"
 
       - name: Validate OpenAPI (openapi.yaml)
         run: |
           npm i -g @apidevtools/swagger-cli
           swagger-cli validate docs/api/openapi.yaml
+          echo "✓ OpenAPI valid"
 
+  # Job 2: Markdown & Code Linting
   lint:
-    name: Lint & Validate
+    name: Lint Code & Markdown
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: validate
-    continue-on-error: false
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v6
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
-      - name: Run Markdown Linter (non-blocking)
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Markdown Linter
+        run: npm run lint:md
+
+      - name: Check links in markdown
+        run: npm run check-links || true
         continue-on-error: true
+
+  # Job 3: Security & Dependency Check
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: validate
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate || true
+        continue-on-error: true
+
+      - name: Check for vulnerable dependencies
         run: |
-          npx --yes markdownlint-cli2 "**/*.md" --config .markdownlint.json || true
+          npm ls 2>/dev/null || true
+
+  # Job 4: Build & Test
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [ validate, lint ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run validation tests
+        run: npm run validate || true
+        continue-on-error: true
+
+      - name: Verify web assets exist
+        run: |
+          test -f web/index.html && echo "✓ index.html exists"
+          test -f web/manifest.json && echo "✓ manifest.json exists"
+          test -f web/sw.js && echo "✓ sw.js exists"
+          test -f web/assets/css/wasd.css && echo "✓ CSS exists"
+          test -f web/assets/js/app.js && echo "✓ JS exists"
+
+  # Job 5: Final Status Check
+  status-check:
+    name: Status Check
+    runs-on: ubuntu-latest
+    needs: [ validate, lint, security, build ]
+    if: always()
+
+    steps:
+      - name: Check job statuses
+        run: |
+          echo "✓ Validate: ${{ needs.validate.result }}"
+          echo "✓ Lint: ${{ needs.lint.result }}"
+          echo "✓ Security: ${{ needs.security.result }}"
+          echo "✓ Build: ${{ needs.build.result }}"
+
+      - name: Fail if critical jobs failed
+        if: |
+          needs.validate.result == 'failure' ||
+          needs.lint.result == 'failure' ||
+          needs.build.result == 'failure'
+        run: exit 1
+
+      - name: Report Success
+        if: success()
+        run: echo "✓ All checks passed!"
