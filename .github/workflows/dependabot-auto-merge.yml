@@ -11,10 +11,12 @@ permissions:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    # Only auto-merge GitHub Actions updates, NOT npm package updates
+    if: github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, 'github-actions')
     steps:
-      - name: Enable auto-merge for Dependabot PRs
+      - name: Enable auto-merge for Dependabot PRs (GitHub Actions only)
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
           merge-method: squash
