@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>chseets • Account & Upload Cheat Sheets</title>
+  <meta name="description" content="Manage your cheat sheet uploads and downloads. Create and share your own printable study guides with the chseets community.">
+  <meta name="keywords" content="cheat sheets, upload, account, study guides">
+  <meta name="author" content="chseets">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:title" content="chseets • Account & Upload Cheat Sheets">
+  <meta property="og:description" content="Manage your cheat sheet uploads and downloads.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chseets.com/profile/">
+  <meta property="og:image" content="https://chseets.com/assets/icons/icon-512.png">
+  <link rel="canonical" href="https://chseets.com/profile/">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/icons/icon-192.png">
+  <meta name="theme-color" content="#0c0f13">
+  <link rel="stylesheet" href="/assets/css/wasd.css">
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="brand">
+      <a href="/"><img class="logo" src="/assets/icons/icon-192.png" alt="chseets"></a>
+      <h1 class="title">chseets</h1>
+    </div>
+    <div class="navlinks">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="#9aa6ad" stroke-width="2"/><path d="M20 20L16.65 16.65" stroke="#9aa6ad" stroke-width="2"/>
+        </svg>
+        <input placeholder="Search sheets…" aria-label="Search sheets">
+      </div>
+      <a class="btn" href="/sheets/">Sheets</a>
+      <a class="btn" href="/about/">About</a>
+      <a class="btn" href="/api/">API</a>
+      <a class="btn" href="/profile/">Account</a>
+      <a class="btn" data-action="signin">Sign in</a>
+      <a class="btn" data-action="signout" style="display:none">Sign out</a>
+      <span class="small">User: <strong data-slot="user">Guest</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="container section">
+  <div class="card">
+    <h2>Account</h2>
+    <p class="small">Signed in as: <strong data-slot="user">Guest</strong></p>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:8px;margin:10px 0" class="tab-buttons">
+      <button class="btn" data-tab="uploads">Uploads</button>
+      <button class="btn" data-tab="downloads">Downloads</button>
+    </div>
+
+    <!-- Uploads panel -->
+    <div id="panel-uploads" class="panel">
+      <h3>Your uploads</h3>
+
+      <!-- Drag & drop -->
+      <div id="dropzone" class="dropzone">
+        <strong>Drop files here</strong><br>
+        <span class="small">…or use the file picker below</span>
+      </div>
+
+      <!-- Picker -->
+      <form id="upload-form" style="display:none;margin:12px 0">
+        <input type="file" name="file" multiple accept=".pdf,.png,.jpg,.webp,.html,.json,.txt">
+        <button class="btn" type="submit">Upload</button>
+      </form>
+
+      <h4 style="margin-top:16px">My files</h4>
+      <div id="my-files" class="cards-grid"></div>
+    </div>
+
+    <!-- Downloads panel -->
+    <div id="panel-downloads" class="panel" style="display:none">
+      <h3>Public downloads</h3>
+      <ul id="dl-list"><li class="small">Loading…</li></ul>
+      <p class="small">Tip: anything under <code>sheets/public/</code> in Supabase will appear here.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer cols">
+    <div>
+      <strong>Product</strong><br>
+      <a href="/about/">About</a><br>
+      <a href="/api/">API</a>
+    </div>
+    <div>
+      <strong>Account</strong><br>
+      <a href="/profile/">Profile</a><br>
+      <a href="/profile/">Sign in</a>
+    </div>
+    <div>
+      <strong>Legal</strong><br>
+      <a href="/legal/imprint.html">Imprint</a><br>
+      <a href="/legal/privacy.html">Privacy Policy</a><br>
+      <a href="/legal/terms.html">Terms of Use</a>
+    </div>
+    <div>
+      <strong>Contact</strong><br>
+      <a href="/legal/contact.html">General contact</a><br>
+      <a href="/legal/partners.html">Partnership</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Tab switcher -->
+<script>
+  const panels = {
+    uploads: document.getElementById('panel-uploads'),
+    downloads: document.getElementById('panel-downloads'),
+  };
+  function show(tab){ for(const k in panels){ panels[k].style.display = (k===tab)?'block':'none'; } }
+  function fromHash(){ show((location.hash.replace('#','')||'uploads')); }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-tab]'); if(!b) return;
+    const t = b.getAttribute('data-tab'); history.replaceState(null,'','#'+t); show(t);
+  });
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+  
+  // Header search functionality
+  const headerSearch = document.querySelector('.search input');
+  if (headerSearch) {
+    headerSearch.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const myFiles = document.querySelectorAll('#my-files .card-file');
+      myFiles.forEach(file => {
+        const name = file.getAttribute('data-name').toLowerCase();
+        file.style.display = name.includes(query) ? 'block' : 'none';
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
+
