@@ -9,6 +9,7 @@ Teljes, automatizált CI/CD pipeline-t hoztunk létre a GitHub Actions-ben.
 ## 📦 Telepített Workflow-k
 
 ### 1️⃣ **CI/CD Pipeline** (`.github/workflows/ci.yml`)
+
 ```yaml
 Trigger: push, pull_request (main, develop)
 Jobs:
@@ -20,6 +21,7 @@ Jobs:
 ```
 
 ### 2️⃣ **Tests** (`.github/workflows/tests.yml`)
+
 ```yaml
 Trigger: push, pull_request (main, develop)
 Jobs:
@@ -31,6 +33,7 @@ Jobs:
 ```
 
 ### 3️⃣ **Deploy** (`.github/workflows/deploy.yml`)
+
 ```yaml
 Trigger: push (main), workflow_run (CI success)
 Jobs:
@@ -42,6 +45,7 @@ Jobs:
 ```
 
 ### 4️⃣ **Documentation** (`.github/workflows/docs.yml`)
+
 ```yaml
 Trigger: push/PR (main, develop), csak docs/* fájlok
 Jobs:
@@ -51,6 +55,7 @@ Jobs:
 ```
 
 ### 5️⃣ **Maintenance** (`.github/workflows/maintenance.yml`)
+
 ```yaml
 Trigger: schedule (daily 2 AM, weekly Monday 3 AM UTC)
 Jobs:
@@ -60,6 +65,7 @@ Jobs:
 ```
 
 ### 📖 **Workflows Dokumentáció** (`.github/workflows/README.md`)
+
 - Teljes CI/CD útmutató
 - Workflow trigger-ek leírása
 - Hibaelhárítási útmutató
@@ -69,7 +75,7 @@ Jobs:
 
 ## 🎯 Pipeline Működése
 
-```
+```ini
 PUSH → main
   ↓
 ┌─────────────────────────────────────────┐
@@ -120,13 +126,16 @@ PUSH → main
 Minden workflow feltölt artifactokat:
 
 ### CI/CD
+
 - Build artifacts (30 nap)
 
 ### Deploy
+
 - `deployment-package-*.tar.gz` (30 nap)
 - `deployment-summary` (90 nap)
 
 ### Maintenance
+
 - `security-report-*.txt` (90 nap)
 - `validation-report-*.txt` (90 nap)
 
@@ -148,13 +157,15 @@ Minden workflow feltölt artifactokat:
 ## 🚀 Hogyan Használd?
 
 ### 1. **Helyi fejlesztés után Push**
+
 ```bash
 git push origin main
 # → Automatikusan indul a CI/CD pipeline
 ```
 
 ### 2. **GitHub Actions Nézet**
-```
+
+```ini
 Repository → Actions tab
   ↓
 Válassz egy workflow-t
@@ -165,14 +176,16 @@ Nézd meg a lépéseket és az outputot
 ```
 
 ### 3. **Artifacts Letöltés**
-```
+
+```ini
 Actions → Workflow run → Artifacts
   ↓
 Download a deployment/build csomagot
 ```
 
 ### 4. **Manuális Trigger**
-```
+
+```ini
 GitHub → Actions → Workflow → Run workflow
 ```
 
@@ -181,12 +194,15 @@ GitHub → Actions → Workflow → Run workflow
 ## 📈 Monitoring
 
 ### Workflow Status Badge
+
 A README-ben elhelyezhető:
+
 ```markdown
 [![CI/CD Pipeline](https://github.com/goAuD/chseets/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/goAuD/chseets/actions/workflows/ci.yml)
 ```
 
 ### Status Checks
+
 Pull Request-ekben automatikusan megjelennek a státusz ellenőrzések.
 
 ---
@@ -214,11 +230,11 @@ Ha módosítani szeretnél egy workflow-t:
 
 ---
 
-## 🎉 Kész!
+## 🎉 Kész
 
 A CI/CD pipeline teljes mértékben működőképes!
 
-```
+```ini
 ┌──────────────────────────────────────────┐
 │ ✓ Validate                               │
 │ ✓ Lint                                   │
