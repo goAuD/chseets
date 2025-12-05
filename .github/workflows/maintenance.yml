@@ -63,7 +63,7 @@ jobs:
           cat security-report.txt
 
       - name: Upload security report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: security-report-${{ github.run_id }}
           path: security-report.txt
@@ -158,7 +158,7 @@ jobs:
           cat validation-report.txt
 
       - name: Upload validation report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: weekly-validation-${{ github.run_id }}
           path: validation-report.txt
