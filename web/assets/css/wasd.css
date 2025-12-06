@@ -123,18 +123,20 @@ h6 {
   color: var(--accent);
 }
 
-/* Scanline overlay */
+/* Scanline overlay - subtle, behind content */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background: var(--scanline);
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.2;
+  z-index: 0;
+  /* Behind content, not on top! */
+  opacity: 0.15;
+  /* Even more subtle */
 }
 
-/* Animated grid background */
+/* Animated grid background - behind everything */
 body::after {
   content: '';
   position: fixed;
@@ -144,9 +146,15 @@ body::after {
     linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 50px 50px;
   animation: gridMove 10s linear infinite;
-  opacity: 0.4;
+  opacity: 0.25;
+  /* More subtle */
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
+  /* Behind EVERYTHING */
+  will-change: background-position;
+  /* Firefox smooth animation */
+  transform: translateZ(0);
+  /* GPU acceleration */
 }
 
 @keyframes gridMove {
@@ -191,6 +199,10 @@ h4,
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 20px;
+  position: relative;
+  /* Needed for z-index */
+  z-index: 1;
+  /* Above grid background */
 }
 
 .section {
@@ -199,21 +211,24 @@ h4,
   position: relative;
 }
 
+/* Cards with glassmorphism */
 .card {
-  background: #0a0a14 !important;
+  background: rgba(10, 10, 20, 0);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border: 1px solid var(--border);
   padding: var(--space-6);
   border-radius: var(--r-md);
-  opacity: 1 !important;
   margin-bottom: 20px;
   transition: all 0.3s var(--ease-tech);
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
   border-color: var(--border-active);
   box-shadow: 0 4px 12px rgba(0, 243, 255, 0.1);
 }
-
 
 .grid {
   display: grid;
@@ -569,7 +584,9 @@ h4,
 
 /* ============== FOOTER ============== */
 .footer {
-  background: var(--bg-grid);
+  background: rgba(10, 10, 20, 0);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border-top: 1px solid var(--border);
   padding: 32px 0;
   margin-top: auto;
