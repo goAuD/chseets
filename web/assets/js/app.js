@@ -52,14 +52,54 @@ async function renderUser(user) {
       .single();
 
     const displayName = profile?.username || user.email.split('@')[0];
-    elsUser.forEach(el => el.textContent = displayName);
+    elsUser.forEach(el => {
+      el.textContent = displayName;
+      el.style.cursor = 'pointer';
+      el.title = 'Click to edit username';
+    });
   } else {
-    elsUser.forEach(el => el.textContent = "Guest");
+    elsUser.forEach(el => {
+      el.textContent = "Guest";
+      el.style.cursor = 'default';
+      el.title = '';
+    });
   }
 
   if (elSignin) elSignin.style.display = user ? "none" : "inline-flex";
   if (elSignout) elSignout.style.display = user ? "inline-flex" : "none";
 }
+
+// Username edit on click
+document.addEventListener('click', async (e) => {
+  const userSlot = e.target.closest('[data-slot="user"]');
+  if (!userSlot) return;
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return; // Only logged in users can edit
+
+  const currentName = userSlot.textContent;
+  const newName = prompt('Enter new username:', currentName);
+
+  if (!newName || newName === currentName) return;
+
+  try {
+    const { error } = await supabase
+      .from('profiles')
+      .update({ username: newName.trim() })
+      .eq('id', user.id);
+
+    if (error) throw error;
+
+    // Update all user slots
+    document.querySelectorAll('[data-slot="user"]').forEach(el => {
+      el.textContent = newName.trim();
+    });
+
+    alert('Username updated! ✅');
+  } catch (err) {
+    alert('Failed to update username: ' + err.message);
+  }
+});
 async function initSession() {
   try {
     const { data: { session } } = await supabase.auth.getSession();
@@ -164,7 +204,15 @@ async function listPublic() {
   try {
     const { data, error } = await supabase.storage.from('sheets').list('public', { limit: 500 });
     if (error) { elDlList.innerHTML = `<li class="small">Error: ${error.message}</li>`; return; }
-    elDlList.innerHTML = (data?.length ? data.map(f => {
+
+    // Filter out previews folder and .emptyFolderPlaceholder
+    const files = (data || []).filter(f =>
+      f.name !== 'previews' &&
+      !f.name.startsWith('.') &&
+      f.id // Only actual files have an id
+    );
+
+    elDlList.innerHTML = (files.length ? files.map(f => {
       const { data: pub } = supabase.storage.from('sheets').getPublicUrl(`public/${f.name}`);
       return `<li><a target="_blank" href="${pub.publicUrl}">${f.name}</a> <span class="small">(${human(f.size)})</span></li>`;
     }).join('') : '<li class="small">No downloads yet.</li>');
@@ -221,8 +269,21 @@ async function makePublic(path, cleanName) {
   // 1) másolat a public/ alá
   const fileName = cleanName || path.split('/').pop();
   const publicPath = `public/${fileName}`;
-  const { error: copyErr } = await supabase.storage.from('sheets').copy(path, publicPath);
-  if (copyErr) throw copyErr;
+
+  // Download from private, upload to public (upsert allows overwriting)
+  const { data: fileBlob, error: dlErr } = await supabase.storage.from('sheets').download(path);
+  if (dlErr) throw dlErr;
+
+  console.log('[MAKE PUBLIC] Uploading to:', publicPath);
+  console.log('[MAKE PUBLIC] File size:', fileBlob?.size, 'type:', fileBlob?.type);
+
+  const { data: upData, error: upErr } = await supabase.storage.from('sheets').upload(publicPath, fileBlob, {
+    upsert: true,
+    contentType: fileBlob.type || 'application/octet-stream'
+  });
+
+  console.log('[MAKE PUBLIC] Upload result:', { data: upData, error: upErr });
+  if (upErr) throw upErr;
 
   // 2) preview készítése (kép => saját fájl; PDF => első oldal PNG)
   const ext = fileName.split('.').pop().toLowerCase();
@@ -245,20 +306,29 @@ async function makePublic(path, cleanName) {
     }
   }
 
-  // 3) meta insert
+  // 3) meta upsert (to handle duplicates)
   const { data: { user } } = await supabase.auth.getUser();
+  const slug = slugify(fileName.replace(/\.[^.]+$/, ''));
   const row = {
-    slug: slugify(fileName.replace(/\.[^.]+$/, '')),
+    user_id: user?.id ?? null,
+    slug: slug,
     title: fileName.replace(/\.[^.]+$/, ''),
     description: '',
     tags: [],
     lang: 'en',
     storage_path: publicPath,
     preview_path: previewPath,
-    created_by: user?.id ?? null,
     published: true
   };
-  const { error: metaErr } = await supabase.from('sheets_meta').insert(row);
+
+  console.log('[MAKE PUBLIC] auth.uid():', user?.id);
+  console.log('[MAKE PUBLIC] row to insert:', row);
+
+  const { data: upsertData, error: metaErr } = await supabase.from('sheets_meta')
+    .upsert(row, { onConflict: 'slug', ignoreDuplicates: false })
+    .select();
+
+  console.log('[MAKE PUBLIC] upsert result:', { data: upsertData, error: metaErr });
   if (metaErr) throw metaErr;
 }
 
@@ -338,16 +408,21 @@ document.addEventListener('click', async (e) => {
   if (del) {
     const card = del.closest('[data-path]'); if (!card) return;
     const path = card.getAttribute('data-path');
+    const cleanName = card.getAttribute('data-name'); // Use clean name like makePublic does!
     if (!confirm(`Delete this file?\n${path}`)) return;
 
-    const fileName = path.split('/').pop();
+    const fileName = cleanName || path.split('/').pop(); // Prefer clean name
     const publicPath = `public/${fileName}`;
     const slug = fileName.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const previewPath = `public/previews/${slug}.png`;
 
+    console.log('[DELETE] Starting delete for:', { path, cleanName, publicPath, previewPath });
+
     // 1) Storage: fő fájl törlése
     try {
-      const { error: storageErr } = await supabase.storage.from('sheets').remove([path]);
+      console.log('[DELETE] Removing from storage:', path);
+      const { data: removeData, error: storageErr } = await supabase.storage.from('sheets').remove([path]);
+      console.log('[DELETE] Storage remove result:', { data: removeData, error: storageErr });
       if (storageErr) {
         alert(`Delete failed: ${storageErr.message}`);
         return;
@@ -360,9 +435,12 @@ document.addEventListener('click', async (e) => {
 
     // 2) DB meta: publik meta sor törlése (ha volt publish)
     try {
-      const { error: dbErr } = await supabase.from('sheets_meta')
+      console.log('[DELETE] Deleting from sheets_meta where storage_path =', publicPath);
+      const { data: delData, error: dbErr } = await supabase.from('sheets_meta')
         .delete()
-        .eq('storage_path', publicPath);
+        .eq('storage_path', publicPath)
+        .select();
+      console.log('[DELETE] sheets_meta delete result:', { data: delData, error: dbErr });
       if (dbErr) {
         console.warn('DB delete error:', dbErr);
         alert('Warning: metadata removal failed. Admins should check the database.');
@@ -371,8 +449,20 @@ document.addEventListener('click', async (e) => {
       console.error('Unexpected DB delete failure:', err);
     }
 
-    // 3) Preview törlés (best-effort)
+    // 3) Public copy törlése (ha volt publish)
     try {
+      console.log('[DELETE] Removing public copy:', publicPath);
+      const { error: publicErr } = await supabase.storage.from('sheets').remove([publicPath]);
+      if (publicErr && !publicErr.message?.toLowerCase().includes('not found')) {
+        console.warn('Public file remove error:', publicErr);
+      }
+    } catch (err) {
+      console.error('Public file remove error:', err);
+    }
+
+    // 4) Preview törlés (best-effort)
+    try {
+      console.log('[DELETE] Removing preview:', previewPath);
       const { error: previewErr } = await supabase.storage.from('sheets').remove([previewPath]);
       if (previewErr && previewErr.message?.toLowerCase().includes('object not found') === false) {
         console.warn('Preview remove error:', previewErr);
@@ -392,6 +482,7 @@ document.addEventListener('click', async (e) => {
     } finally {
       // 5) Helyi kártya eltávolítása (azonnali UX)
       card.remove();
+      alert('✅ Deleted successfully!');
     }
     return;
   }

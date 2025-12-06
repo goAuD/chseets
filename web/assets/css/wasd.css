@@ -131,7 +131,7 @@ body::before {
   background: var(--scanline);
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 /* Animated grid background */
@@ -349,6 +349,19 @@ h4,
   display: none;
 }
 
+/* Active/click state - magenta flash */
+.btn:active:not(:disabled) {
+  background: var(--neon-pink);
+  color: #0c0f13;
+  box-shadow: 0 0 20px var(--neon-pink);
+  transform: scale(0.97);
+}
+
+.btn:active:not(:disabled)::before {
+  transform: translateX(0);
+  background: var(--neon-pink);
+}
+
 
 /* Pink button for Sign out */
 .btn-pink {
@@ -408,6 +421,13 @@ h4,
 .btn-sm:hover {
   background: var(--accent);
   color: #000;
+}
+
+.btn-sm:active {
+  background: var(--neon-pink);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-pink);
+  transform: scale(0.95);
 }
 
 /* ============== HERO ============== */
