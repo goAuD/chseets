@@ -67,6 +67,10 @@ async function renderUser(user) {
 
   if (elSignin) elSignin.style.display = user ? "none" : "inline-flex";
   if (elSignout) elSignout.style.display = user ? "inline-flex" : "none";
+
+  // Show/hide account management section (Danger Zone)
+  const elAccountMgmt = document.getElementById('account-management');
+  if (elAccountMgmt) elAccountMgmt.style.display = user ? "block" : "none";
 }
 
 // Username edit on click
@@ -528,6 +532,65 @@ document.addEventListener('click', async (e) => {
       await updateSession();
     } catch (err) {
       console.error('Sign out error:', err);
+    }
+  }
+
+  // Delete Account
+  if (act === 'delete-account') {
+    const confirmed = confirm('⚠️ Are you ABSOLUTELY sure you want to delete your account?\n\nThis will permanently delete:\n• All your uploaded files\n• All your published sheets\n• Your profile data\n\nThis action CANNOT be undone!');
+    if (!confirmed) return;
+
+    const doubleConfirm = prompt('Type "DELETE" to confirm account deletion:');
+    if (doubleConfirm !== 'DELETE') {
+      alert('Account deletion cancelled.');
+      return;
+    }
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        alert('You must be signed in to delete your account.');
+        return;
+      }
+
+      // 1. Delete user's files from storage (uploads bucket)
+      const uploadsPrefix = `uploads/${user.id}`;
+      const { data: uploadFiles } = await supabase.storage.from('sheets').list(uploadsPrefix);
+      if (uploadFiles?.length) {
+        const filesToDelete = uploadFiles.map(f => `${uploadsPrefix}/${f.name}`);
+        await supabase.storage.from('sheets').remove(filesToDelete);
+      }
+
+      // 2. Delete user's public files from storage
+      const publicPrefix = `public/${user.id}`;
+      const { data: publicFiles } = await supabase.storage.from('sheets').list(publicPrefix);
+      if (publicFiles?.length) {
+        const publicFilesToDelete = publicFiles.map(f => `${publicPrefix}/${f.name}`);
+        await supabase.storage.from('sheets').remove(publicFilesToDelete);
+      }
+
+      // 3. Delete user's preview images
+      const previewsPrefix = `public/previews/${user.id}`;
+      const { data: previewFiles } = await supabase.storage.from('sheets').list(previewsPrefix);
+      if (previewFiles?.length) {
+        const previewFilesToDelete = previewFiles.map(f => `${previewsPrefix}/${f.name}`);
+        await supabase.storage.from('sheets').remove(previewFilesToDelete);
+      }
+
+      // 4. Delete sheets_meta entries
+      await supabase.from('sheets_meta').delete().eq('user_id', user.id);
+
+      // 5. Delete profile
+      await supabase.from('profiles').delete().eq('id', user.id);
+
+      // 6. Sign out
+      await supabase.auth.signOut();
+
+      alert('Your account and all associated data have been deleted. Thank you for using chseets.');
+      window.location.href = '/';
+    } catch (err) {
+      alert('Failed to delete account: ' + err.message);
+      console.error('Delete account error:', err);
     }
   }
 });
