@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>chseets • Install as App (PWA)</title>
+    <meta name="description"
+        content="Install chseets as a Progressive Web App on your device for offline access and quick launching.">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/assets/icons/icon-192.png">
+    <meta name="theme-color" content="#0c0f13">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/wasd.css?v=20241206AI">
+    <script type="module" src="/assets/js/app.js?v=20241206AM"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container nav">
+            <div class="brand">
+                <a href="/"><img class="logo" src="/assets/icons/icon-192.png" alt="chseets"></a>
+                <h1 class="title">chseets</h1>
+            </div>
+            <div class="nav-right">
+                <span class="user-display">User: <strong data-slot="user">Guest</strong></span>
+                <button class="burger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="navlinks" id="nav-menu">
+                    <div class="nav-main">
+                        <a class="btn" href="/">Home</a>
+                        <a class="btn" href="/sheets/">Sheets</a>
+                        <a class="btn" href="/about/">About</a>
+                        <a class="btn" href="/api/">API</a>
+                        <a class="btn" href="/pwa/">Install App</a>
+                        <a class="btn" href="/profile/">Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container section">
+        <div class="card">
+            <h2>Install chseets as an App</h2>
+            <p>chseets is a <strong>Progressive Web App (PWA)</strong>. You can install it on your device for:</p>
+            <ul>
+                <li><strong>Instant access</strong> from your home screen or desktop</li>
+                <li><strong>Offline viewing</strong> of cached sheets</li>
+                <li><strong>Faster loading</strong> with local caching</li>
+                <li><strong>Full screen experience</strong> without browser UI</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Chrome, Edge, Brave (Desktop and Android)</h3>
+            <ol>
+                <li>Visit <a href="https://chseets.com">chseets.com</a></li>
+                <li>Look for the <strong>install icon</strong> in the address bar</li>
+                <li>Click it and select <strong>"Install"</strong></li>
+                <li>The app will appear in your Start Menu or Applications folder</li>
+            </ol>
+            <p class="small">On Android: Tap the menu and select "Add to Home screen" or "Install app"</p>
+        </div>
+
+        <div class="card">
+            <h3>Firefox (Desktop and Android)</h3>
+            <p>Firefox does not support automatic PWA install prompts. Use these steps:</p>
+            <ol>
+                <li>Visit <a href="https://chseets.com">chseets.com</a></li>
+                <li>Click the address bar and look for the <strong>home icon</strong></li>
+                <li>Click "Add to Home screen" (on Android)</li>
+                <li>On desktop: Bookmark the page or use a PWA extension</li>
+            </ol>
+            <p class="small">Alternatively, install the <a
+                    href="https://addons.mozilla.org/en-US/firefox/addon/nicepwa/" target="_blank"
+                    rel="noopener">Progressive Web App for Firefox</a> extension.</p>
+        </div>
+
+        <div class="card">
+            <h3>Safari (iOS and macOS)</h3>
+            <ol>
+                <li>Open <a href="https://chseets.com">chseets.com</a> in Safari</li>
+                <li>Tap the <strong>Share button</strong></li>
+                <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+                <li>Name it and tap <strong>"Add"</strong></li>
+            </ol>
+            <p class="small">On macOS Sonoma+: File then "Add to Dock" or use the share menu.</p>
+        </div>
+
+        <div class="card">
+            <h3>Already Installed?</h3>
+            <p id="pwa-status">Checking...</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-category">
+                <h4>Product</h4>
+                <a href="/about/">About</a>
+                <a href="/api/">API</a>
+                <a href="/pwa/">Install App</a>
+            </div>
+            <div class="footer-category">
+                <h4>Account</h4>
+                <a href="/profile/">Profile</a>
+                <a href="/profile/">Sign in</a>
+            </div>
+            <div class="footer-category">
+                <h4>Legal</h4>
+                <a href="/legal/imprint.html">Imprint</a>
+                <a href="/legal/privacy.html">Privacy Policy</a>
+                <a href="/legal/terms.html">Terms of Use</a>
+            </div>
+            <div class="footer-category">
+                <h4>Contact</h4>
+                <a href="/legal/contact.html">General contact</a>
+                <a href="/legal/partners.html">Partnership</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const statusEl = document.getElementById('pwa-status');
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            statusEl.innerHTML = '<strong style="color: #00ff88">You are using the installed app!</strong>';
+        } else {
+            statusEl.innerHTML = 'Not installed yet. Follow the steps above for your browser.';
+        }
+    </script>
+</body>
+
+</html>

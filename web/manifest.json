@@ -1,20 +1,30 @@
 {
-  "name": "chseets",
+  "name": "chseets - Printable Cheat Sheets",
   "short_name": "chseets",
+  "description": "Create, share, and download beautiful printable cheat sheets. Perfect for studying, quick reference, and learning.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0c0f13",
   "theme_color": "#0c0f13",
+  "categories": [
+    "education",
+    "productivity",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "/assets/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/assets/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

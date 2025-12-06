@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="/assets/css/wasd.css?v=20241206AI">
   <script type="module" src="/assets/js/app.js?v=20241206AM"></script>
   <script>
+    // Service Worker registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -40,6 +41,91 @@
           .catch(err => console.log('SW registration failed:', err));
       });
     }
+
+    // PWA Install Prompt - English, cross-browser support
+    let deferredPrompt;
+    let installBannerShown = sessionStorage.getItem('pwa-banner-dismissed');
+
+    function createInstallBanner(isNativePrompt) {
+      const banner = document.createElement('div');
+      banner.id = 'pwa-install-banner';
+      banner.innerHTML = isNativePrompt ? `
+        <div class="pwa-install-content">
+          <span>📱 Install chseets app for quick access!</span>
+          <button id="pwa-install-btn" class="btn">Install</button>
+          <button id="pwa-dismiss-btn" class="btn-sm">✕</button>
+        </div>
+      ` : `
+        <div class="pwa-install-content">
+          <span>📱 Install chseets as an app!</span>
+          <a href="/pwa/" class="btn">How to Install</a>
+          <button id="pwa-dismiss-btn" class="btn-sm">✕</button>
+        </div>
+      `;
+      banner.style.cssText = `
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, rgba(5,5,16,0.98), rgba(20,20,35,0.98));
+        border: 1px solid #00f3ff;
+        border-radius: 12px;
+        padding: 14px 24px;
+        z-index: 9999;
+        box-shadow: 0 8px 32px rgba(0,243,255,0.25), 0 0 20px rgba(0,243,255,0.1);
+        backdrop-filter: blur(12px);
+        max-width: 90vw;
+        text-align: center;
+      `;
+      return banner;
+    }
+
+    // Native install prompt (Chrome, Edge, etc.)
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBannerShown) return;
+
+      const banner = createInstallBanner(true);
+      document.body.appendChild(banner);
+      console.log('PWA install prompt ready');
+    });
+
+    // Show fallback banner for Firefox/Safari after delay
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+        const hasNativePrompt = !!deferredPrompt;
+        const isChromium = /Chrome|Chromium|Edg/.test(navigator.userAgent);
+
+        if (!isStandalone && !hasNativePrompt && !isChromium && !installBannerShown) {
+          const banner = createInstallBanner(false);
+          document.body.appendChild(banner);
+          console.log('Showing manual install banner for Firefox/Safari');
+        }
+      }, 3000);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (e.target.id === 'pwa-install-btn' && deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((result) => {
+          console.log('PWA install result:', result.outcome);
+          deferredPrompt = null;
+          document.getElementById('pwa-install-banner')?.remove();
+        });
+      }
+      if (e.target.id === 'pwa-dismiss-btn') {
+        document.getElementById('pwa-install-banner')?.remove();
+        sessionStorage.setItem('pwa-banner-dismissed', 'true');
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was installed');
+      document.getElementById('pwa-install-banner')?.remove();
+    });
   </script>
 </head>
 
@@ -62,6 +148,7 @@
             <a class="btn" href="/sheets/">Sheets</a>
             <a class="btn" href="/about/">About</a>
             <a class="btn" href="/api/">API</a>
+            <a class="btn" href="/pwa/">Install App</a>
             <a class="btn" href="/profile/">Account</a>
           </div>
         </div>
@@ -74,11 +161,12 @@
       <div id="hero-cards" style="display:none"></div>
 
       <div class="card">
-        <h3>What's inside</h3>
+        <h3>About chseets</h3>
         <ul>
-          <li>Minimal PWA (manifest + SW)</li>
-          <li>WASD Travel inspired design</li>
-          <li>Printable A4 sheets</li>
+          <li>Free printable cheat sheets and study guides</li>
+          <li>Upload and share your own sheets</li>
+          <li>Open API for developers</li>
+          <li>Works offline as a PWA</li>
         </ul>
       </div>
 
@@ -87,7 +175,7 @@
         <ol>
           <li>Browse <a href="/sheets/">Sheets</a></li>
           <li>Print with <code>Ctrl/Cmd + P</code> (A4)</li>
-          <li>Iterate content; API coming soon</li>
+          <li>Or <a href="/profile/">upload</a> your own sheets</li>
         </ol>
       </div>
 
@@ -113,6 +201,7 @@
         <h4>Product</h4>
         <a href="/about/">About</a>
         <a href="/api/">API</a>
+        <a href="/pwa/">Install App</a>
       </div>
       <div class="footer-category">
         <h4>Account</h4>
