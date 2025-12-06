@@ -1,84 +1,75 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>chseets • About - Printable Cheat Sheets Platform</title>
-  <meta name="description" content="Learn about chseets, a platform for creating and sharing beautiful printable cheat sheets. Discover our mission and features.">
-  <meta name="keywords" content="cheat sheets, about, printable, study guides">
-  <meta name="author" content="chseets">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="chseets • About">
-  <meta property="og:description" content="Learn about chseets, a platform for creating and sharing beautiful printable cheat sheets.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://chseets.com/about/">
-  <meta property="og:image" content="https://chseets.com/assets/icons/icon-512.png">
-  <link rel="canonical" href="https://chseets.com/about/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>chseets • About</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/assets/icons/icon-192.png">
   <meta name="theme-color" content="#0c0f13">
-  <link rel="stylesheet" href="/assets/css/wasd.css">
-  <script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('/sw.js'))}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/wasd.css?v=20241206Q">
+  <script type="module" src="/assets/js/app.js?v=20241206Y"></script>
 </head>
+
 <body>
-
-<header class="header">
-  <div class="container nav">
-    <div class="brand">
-      <a href="/"><img class="logo" src="/assets/icons/icon-192.png" alt="chseets"></a>
-      <h1 class="title">chseets</h1>
+  <header class="header">
+    <div class="container nav">
+      <div class="brand">
+        <a href="/"><img class="logo" src="/assets/icons/icon-192.png" alt="chseets"></a>
+        <h1 class="title">chseets</h1>
+      </div>
+      <div class="nav-right">
+        <span class="user-display">User: <strong data-slot="user">Guest</strong></span>
+        <button class="burger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="navlinks" id="nav-menu">
+          <div class="nav-main">
+            <a class="btn" href="/">Home</a>
+            <a class="btn" href="/sheets/">Sheets</a>
+            <a class="btn" href="/about/">About</a>
+            <a class="btn" href="/api/">API</a>
+            <a class="btn" href="/profile/">Account</a>
+          </div></div>
+      </div>
     </div>
-    <div class="navlinks">
-      <a class="btn" href="/sheets/">Sheets</a>
-      <a class="btn" href="/about/">About</a>
-      <a class="btn" href="/api/">API</a>
-      <a class="btn" href="/profile/">Account</a>
+  </header>
+  <main class="container section">
+    <div class="card">
+      <h2>About chseets</h2>
+      <p><strong>chseets</strong> is a lightweight open-source project for creating and sharing printable cheat sheets.
+      </p>
+      <p>Part of the <a href="https://wasdtravel.com" target="_blank">WASD Travel</a> ecosystem.</p>
+      <h3>Vision</h3>
+      <ul>
+        <li>Universal format for study materials</li>
+        <li>Works fully offline (PWA)</li>
+        <li>Community-driven library</li>
+        <li>Privacy-first, no tracking</li>
+      </ul>
+      <p>Contact: <a href="mailto:chseets@wasdtravel.com">chseets@wasdtravel.com</a></p>
     </div>
-  </div>
-</header>
-
-<main class="container section">
-  <div class="card">
-    <h2>About chseets</h2>
-    <p><strong>chseets</strong> is a lightweight open-source project for creating and sharing printable cheat sheets across multiple technical fields.</p>
-    <p>It started as part of the <a href="https://wasdtravel.com" target="_blank">WASD Travel</a> ecosystem - designed for students, developers, educators, museums, citys and travelers who want quick, portable references without clutter or ads.</p>
-    <p>The goal: clean design, open contribution, and fully offline access through Progressive Web App (PWA) technology.</p>
-    <h3>Vision</h3>
-    <ul>
-      <li>Universal format for short, high-quality study materials</li>
-      <li>Works fully offline (installable PWA)</li>
-      <li>Community-driven library of technical sheets</li>
-      <li>Privacy-first, no tracking</li>
-    </ul>
-    <p>Maintained by <strong>WASD Travel</strong> • Contact: <a href="mailto:chseets@wasdtravel.com">chseets@wasdtravel.com</a></p>
-  </div>
-</main>
-
-<footer class="footer">
-  <div class="container footer cols">
-    <div>
-      <strong>Product</strong><br>
-      <a href="/about/">About</a><br>
-      <a href="/api/">API</a>
+  </main>
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-category">
+        <h4>Product</h4><a href="/about/">About</a><a href="/api/">API</a>
+      </div>
+      <div class="footer-category">
+        <h4>Account</h4><a href="/profile/">Profile</a><a href="/profile/">Sign in</a>
+      </div>
+      <div class="footer-category">
+        <h4>Legal</h4><a href="/legal/imprint.html">Imprint</a><a href="/legal/privacy.html">Privacy</a><a
+          href="/legal/terms.html">Terms</a>
+      </div>
+      <div class="footer-category">
+        <h4>Contact</h4><a href="/legal/contact.html">Contact</a><a href="/legal/partners.html">Partnership</a>
+      </div>
     </div>
-    <div>
-      <strong>Account</strong><br>
-      <a href="/profile/">Profile</a><br>
-      <a href="/profile/">Sign in</a>
-    </div>
-    <div>
-      <strong>Legal</strong><br>
-      <a href="/legal/imprint.html">Imprint</a><br>
-      <a href="/legal/privacy.html">Privacy Policy</a><br>
-      <a href="/legal/terms.html">Terms of Use</a>
-    </div>
-    <div>
-      <strong>Contact</strong><br>
-      <a href="/legal/contact.html">General contact</a><br>
-      <a href="/legal/partners.html">Partnership</a>
-    </div>
-  </div>
-</footer>
-
+  </footer>
 </body>
+
 </html>

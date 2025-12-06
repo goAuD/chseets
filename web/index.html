@@ -1,15 +1,18 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>chseets - Printable Cheat Sheets & Study Guides</title>
-  <meta name="description" content="Create, share, and download beautiful printable cheat sheets. Perfect for studying, quick reference, and learning. Browse curated sheets or upload your own.">
+  <meta name="description"
+    content="Create, share, and download beautiful printable cheat sheets. Perfect for studying, quick reference, and learning. Browse curated sheets or upload your own.">
   <meta name="keywords" content="cheat sheets, printable, study guides, learning, reference, PDF">
   <meta name="author" content="chseets">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="chseets • Printable Cheat Sheets & Study Guides">
-  <meta property="og:description" content="Create, share, and download beautiful printable cheat sheets. Perfect for studying, quick reference, and learning.">
+  <meta property="og:description"
+    content="Create, share, and download beautiful printable cheat sheets. Perfect for studying, quick reference, and learning.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://chseets.com">
   <meta property="og:image" content="https://chseets.com/assets/icons/icon-512.png">
@@ -20,97 +23,133 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/assets/icons/icon-192.png">
   <meta name="theme-color" content="#0c0f13">
-  <link rel="stylesheet" href="/assets/css/wasd.css">
-  <script type="module" src="/assets/js/app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/wasd.css?v=20241206Q">
+  <script type="module" src="/assets/js/app.js?v=20241206Y"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => {
+            console.log('SW registered:', reg);
+            reg.update();
+          })
+          .catch(err => console.log('SW registration failed:', err));
+      });
+    }
+  </script>
 </head>
+
 <body>
 
-<header class="header">
-  <div class="container nav">
-    <div class="brand">
-      <a href="/"><img class="logo" src="/assets/icons/icon-192.png" alt="chseets"></a>
-      <h1 class="title">chseets</h1>
+  <header class="header">
+    <div class="container nav">
+      <div class="brand">
+        <a href="/"><img class="logo" src="/assets/icons/icon-192.png" alt="chseets"></a>
+        <h1 class="title">chseets</h1>
+      </div>
+      <div class="nav-right">
+        <span class="user-display">User: <strong data-slot="user">Guest</strong></span>
+        <button class="burger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="navlinks" id="nav-menu">
+          <div class="nav-main">
+            <a class="btn" href="/">Home</a>
+            <a class="btn" href="/sheets/">Sheets</a>
+            <a class="btn" href="/about/">About</a>
+            <a class="btn" href="/api/">API</a>
+            <a class="btn" href="/profile/">Account</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="navlinks">
-      <a class="btn" href="/sheets/">Sheets</a>
-      <a class="btn" href="/about/">About</a>
-      <a class="btn" href="/api/">API</a>
-      <a class="btn" href="/profile/">Account</a>
-      <a class="btn" data-action="signin">Sign in</a>
-      <a class="btn" data-action="signout" style="display:none">Sign out</a>
-      <span class="small">User: <strong data-slot="user">Guest</strong></span>
-    </div>
-  </div>
-</header>
+  </header>
 
-<main class="container">
-  <section class="hero section">
-    <div id="hero-cards" class="hero-cards-grid"></div>
-  </section>
+  <main class="hero">
+    <section class="container">
+      <div id="hero-cards" style="display:none"></div>
 
-  <section class="section grid cols-2">
-    <div class="card">
-      <h3>What's inside</h3>
-      <ul>
-        <li>Minimal PWA (manifest + SW)</li>
-        <li>WASD Travel inspired design</li>
-        <li>Printable A4 sheets</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Quick start</h3>
-      <ol>
-        <li>Browse <a href="/sheets/">Sheets</a></li>
-        <li>Print with <code>Ctrl/Cmd + P</code> (A4)</li>
-        <li>Iterate content; API coming soon</li>
-      </ol>
-    </div>
-  </section>
-</main>
+      <div class="card">
+        <h3>What's inside</h3>
+        <ul>
+          <li>Minimal PWA (manifest + SW)</li>
+          <li>WASD Travel inspired design</li>
+          <li>Printable A4 sheets</li>
+        </ul>
+      </div>
 
-<footer class="footer">
-  <div class="container footer cols">
-    <div>
-      <strong>Product</strong><br>
-      <a href="/about/">About</a><br>
-      <a href="/api/">API</a>
-    </div>
-    <div>
-      <strong>Account</strong><br>
-      <a href="/profile/">Profile</a><br>
-      <a href="/profile/">Sign in</a>
-    </div>
-    <div>
-      <strong>Legal</strong><br>
-      <a href="/legal/imprint.html">Imprint</a><br>
-      <a href="/legal/privacy.html">Privacy Policy</a><br>
-      <a href="/legal/terms.html">Terms of Use</a>
-    </div>
-    <div>
-      <strong>Contact</strong><br>
-      <a href="/legal/contact.html">General contact</a><br>
-      <a href="/legal/partners.html">Partnership</a>
-    </div>
-  </div>
-</footer>
+      <div class="card">
+        <h3>Quick start</h3>
+        <ol>
+          <li>Browse <a href="/sheets/">Sheets</a></li>
+          <li>Print with <code>Ctrl/Cmd + P</code> (A4)</li>
+          <li>Iterate content; API coming soon</li>
+        </ol>
+      </div>
 
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-  const supabase = createClient(
-    "https://zpvqcjrtsbznaaphjhug.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdnFjanJ0c2J6bmFhcGhqaHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MjM3MDcsImV4cCI6MjA3NjE5OTcwN30.pICNfmmQTvXz-TcLHTFI5EaXWtVV_DUGK7wjufVFjuc"
-  );
+      <div class="card" id="signin-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <button id="signin-btn" class="btn" style="padding: 6px 16px;">Sign in</button>
+          <button id="signout-btn" class="btn-pink" style="padding: 6px 16px;" disabled>Sign out</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <input type="text" id="signin-username" name="username" placeholder="Your name" autocomplete="name"
+            style="padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); font-family: inherit; border-radius: 4px;">
+          <input type="email" id="signin-email" name="email" placeholder="your@email.com" autocomplete="email"
+            style="padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); font-family: inherit; border-radius: 4px;">
+        </div>
+        <div id="signin-message" style="margin-top: 12px; font-size: var(--fs-0); opacity: 0.7;"></div>
+      </div>
+    </section>
+  </main>
 
-  const host = document.getElementById('hero-cards');
-  let rows = [];
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-category">
+        <h4>Product</h4>
+        <a href="/about/">About</a>
+        <a href="/api/">API</a>
+      </div>
+      <div class="footer-category">
+        <h4>Account</h4>
+        <a href="/profile/">Profile</a>
+        <a href="/profile/">Sign in</a>
+      </div>
+      <div class="footer-category">
+        <h4>Legal</h4>
+        <a href="/legal/imprint.html">Imprint</a>
+        <a href="/legal/privacy.html">Privacy Policy</a>
+        <a href="/legal/terms.html">Terms of Use</a>
+      </div>
+      <div class="footer-category">
+        <h4>Contact</h4>
+        <a href="/legal/contact.html">General contact</a>
+        <a href="/legal/partners.html">Partnership</a>
+      </div>
+    </div>
+  </footer>
 
-  function render() {
-    host.innerHTML = rows.map((r, i) => {
-      const preview = r.preview_path
-        ? supabase.storage.from('sheets').getPublicUrl(r.preview_path).data.publicUrl
-        : '';
-      const url = supabase.storage.from('sheets').getPublicUrl(r.storage_path).data.publicUrl;
-      return `
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/+esm";
+    const supabase = createClient(
+      "https://zpvqcjrtsbznaaphjhug.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdnFjanJ0c2J6bmFhcGhqaHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MjM3MDcsImV4cCI6MjA3NjE5OTcwN30.pICNfmmQTvXz-TcLHTFI5EaXWtVV_DUGK7wjufVFjuc"
+    );
+
+    const host = document.getElementById('hero-cards');
+    let rows = [];
+
+    function render() {
+      host.innerHTML = rows.map((r, i) => {
+        const preview = r.preview_path
+          ? supabase.storage.from('sheets').getPublicUrl(r.preview_path).data.publicUrl
+          : '';
+        const url = supabase.storage.from('sheets').getPublicUrl(r.storage_path).data.publicUrl;
+        return `
         <div class="hero-card" data-i="${i}">
           <div class="hero-card-inner">
             <div class="hero-card-thumb" ${preview ? `style="background-image:url('${preview}')"` : ''}>
@@ -123,30 +162,123 @@
             </div>
           </div>
         </div>`;
-    }).join('');
-  }
+      }).join('');
+    }
 
-  // ÚJ: egyetlen aszinkron lekérés, amit később újra tudsz hívni
-  async function fetchHero() {
-    const { data } = await supabase
-      .from('sheets_meta')
-      .select('title,storage_path,preview_path,created_at')
-      .eq('published', true)
-      .order('created_at', { ascending: false })
-      .limit(6);
-    rows = data || [];
-    render();
-  }
+    async function fetchHero() {
+      const { data } = await supabase
+        .from('sheets_meta')
+        .select('title,storage_path,preview_path,created_at')
+        .eq('published', true)
+        .order('created_at', { ascending: false })
+        .limit(6);
+      rows = data || [];
+      render();
+    }
 
-  // 🔹 Itt hívd meg — ez váltja ki a régi (async IIFE) azonnali lekérést
-  fetchHero();
+    fetchHero();
 
-  // 🔹 És ez alá jöjjenek az esemény-listenerek
-  window.addEventListener('sheet:deleted', fetchHero);
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'sheet:deleted') fetchHero();
-  });
-</script>
+    window.addEventListener('sheet:deleted', fetchHero);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'sheet:deleted') fetchHero();
+    });
+
+    // Sign in/out button handlers
+    const signinBtn = document.getElementById('signin-btn');
+    const signoutBtn = document.getElementById('signout-btn');
+    const signinMessage = document.getElementById('signin-message');
+
+    // Sign in button
+    if (signinBtn) {
+      signinBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        console.log('[SIGNIN] Sign in button clicked');
+
+        const username = document.getElementById('signin-username').value.trim();
+        const email = document.getElementById('signin-email').value.trim();
+
+        if (!username || !email) {
+          signinMessage.textContent = '⚠️ Please fill all fields';
+          signinMessage.style.color = 'var(--neon-pink)';
+          return;
+        }
+
+        console.log('[SIGNIN] Sending magic link to:', email, 'for user:', username);
+        signinMessage.textContent = 'Sending magic link...';
+        signinMessage.style.color = 'var(--accent)';
+
+        try {
+          const { error } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+              emailRedirectTo: window.location.origin + '/profile/',
+              data: { display_name: username }
+            }
+          });
+
+          if (error) {
+            console.error('[SIGNIN] Error:', error);
+            signinMessage.textContent = `❌ Error: ${error.message}`;
+            signinMessage.style.color = 'var(--neon-pink)';
+          } else {
+            console.log('[SIGNIN] Magic link sent successfully!');
+            signinMessage.textContent = '✅ Check your email for the magic link!';
+            signinMessage.style.color = '#00ff88';
+
+            // Clear inputs
+            document.getElementById('signin-username').value = '';
+            document.getElementById('signin-email').value = '';
+          }
+        } catch (err) {
+          console.error('[SIGNIN] Exception:', err);
+          signinMessage.textContent = `❌ Failed: ${err.message}`;
+          signinMessage.style.color = 'var(--neon-pink)';
+        }
+      });
+    }
+
+    // Sign out button
+    if (signoutBtn) {
+      signoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (signoutBtn.disabled) return;
+
+        console.log('[SIGNOUT] Sign out button clicked');
+        signinMessage.textContent = 'Signing out...';
+        signinMessage.style.color = 'var(--accent)';
+
+        try {
+          await supabase.auth.signOut();
+          console.log('[SIGNOUT] Signed out successfully');
+          signinMessage.textContent = '✅ Signed out successfully!';
+          signinMessage.style.color = '#00ff88';
+
+          // Disable sign out button
+          signoutBtn.disabled = true;
+
+          // Reload to update UI
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (err) {
+          console.error('[SIGNOUT] Error:', err);
+          signinMessage.textContent = `❌ Sign out failed: ${err.message}`;
+          signinMessage.style.color = 'var(--neon-pink)';
+        }
+      });
+    }
+
+    // Check auth state and enable/disable sign in/out buttons
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log('[AUTH] State changed:', event, session?.user?.email);
+      if (signinBtn) {
+        signinBtn.disabled = !!session; // Disable when logged in
+      }
+      if (signoutBtn) {
+        signoutBtn.disabled = !session; // Disable when logged out
+      }
+    });
+  </script>
 </body>
-</html>
 
+</html>

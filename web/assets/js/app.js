@@ -17,14 +17,46 @@ const elMyFiles = document.querySelector('#my-files');     // profil lista
 const elDlList = document.querySelector('#dl-list');      // nyitóoldali "downloads"
 const elSheetsList = document.querySelector('#sheets-list');  // /sheets/ galéria
 
+/* ---------------- Burger Menu Toggle ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const burger = document.querySelector('.burger');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (burger && navMenu) {
+    burger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      navMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking links
+    navMenu.querySelectorAll('a:not([data-action])').forEach(link => {
+      link.addEventListener('click', () => navMenu.classList.remove('active'));
+    });
+  }
+});
+
 /* ---------------- Helpers ---------------- */
 const human = (n) => { if (n == null) return ''; const u = ['B', 'KB', 'MB', 'GB']; let i = 0; while (n > 1024 && i < u.length - 1) { n /= 1024; i++; } return `${n.toFixed(1)} ${u[i]}`; };
 const prettyName = (name) => name.replace(/^\d{10,}[_\-]/, ''); // levágja a timestamp_ részt
 const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 80);
 
 /* ---------------- User UI ---------------- */
-function renderUser(user) {
-  elsUser.forEach(el => el.textContent = user ? user.email : "Guest");
+async function renderUser(user) {
+  if (user) {
+    // Fetch username from profiles table
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('username')
+      .eq('id', user.id)
+      .single();
+
+    const displayName = profile?.username || user.email.split('@')[0];
+    elsUser.forEach(el => el.textContent = displayName);
+  } else {
+    elsUser.forEach(el => el.textContent = "Guest");
+  }
+
   if (elSignin) elSignin.style.display = user ? "none" : "inline-flex";
   if (elSignout) elSignout.style.display = user ? "inline-flex" : "none";
 }
