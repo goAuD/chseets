@@ -2,9 +2,10 @@
 
 ## Prioritás: Magas
 
-### Account kezelés
+### UI/UX Javítások
 
-- [ ] Account törlés gomb implementálása (GDPR kötelező!)
+- [ ] Custom modal/popup design (cyberpunk stílus)
+- [ ] PWA install banner méret csökkentése mobilon (media query)
 
 ### Lighthouse optimalizáció
 
@@ -28,7 +29,7 @@
 
 - [ ] Console.log debug üzenetek eltávolítása
 
-## Befejezve (2025.12.06)
+## Befejezve (2025.12.06-07)
 
 - [x] PWA manifest, SW, install prompt
 - [x] API dokumentáció
@@ -38,10 +39,12 @@
 - [x] Legal oldalak DSGVO szerint
 - [x] About oldal (turizmus + edukáció fókusz)
 - [x] Font preload + async CSS (Lighthouse)
+- [x] Account törlés gomb (Danger Zone, dupla megerősítés)
+- [x] CI/CD deploy workflow fix
+- [x] Markdown linter fix
 
 ## Lighthouse eredmények (2025.12.06)
 
 - Performance: ~75%
 - Accessibility: 94%
 - Best Practices: 100%
-- Fő bottleneck: 3rd party Supabase scriptek
