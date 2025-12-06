@@ -23,10 +23,20 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/assets/icons/icon-192.png">
   <meta name="theme-color" content="#0c0f13">
+
+  <!-- Font preload for faster rendering -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet">
+  </noscript>
+
+  <!-- Main CSS -->
   <link rel="stylesheet" href="/assets/css/wasd.css?v=20241206AI">
   <script type="module" src="/assets/js/app.js?v=20241206AM"></script>
   <script>
