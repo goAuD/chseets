@@ -1,0 +1,5 @@
+# Ignore personal TODO list
+docs/TODO.md
+
+# Ignore node_modules
+node_modules/
