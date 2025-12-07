@@ -24,7 +24,7 @@
 
   /* Neons */
   --neon-cyan: #00f3ff;
-  --neon-pink: #ff003c;
+  --neon-pink: #ff2fd8;
   --neon-yellow: #fcee0a;
 
   --accent: var(--neon-cyan);
@@ -684,14 +684,33 @@ pre code {
 }
 
 .footer a {
-  display: block;
+  display: inline-block;
   color: var(--muted);
   font-size: var(--fs-1);
   margin-bottom: 4px;
+  position: relative;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+/* Animated underline */
+.footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), var(--neon-pink));
+  transition: width 0.3s var(--ease-tech);
 }
 
 .footer a:hover {
   color: var(--accent);
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+}
+
+.footer a:hover::after {
+  width: 100%;
 }
 
 /* ============== FORMS ============== */
