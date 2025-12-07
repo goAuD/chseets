@@ -577,6 +577,11 @@ pre code {
 .card-file .meta {
   font-size: var(--fs-0);
   color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.card-file:hover .meta {
+  color: #f9f9ff;
 }
 
 .card-file .actions {
@@ -705,8 +710,7 @@ pre code {
 }
 
 .footer a:hover {
-  color: var(--accent);
-  text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+  color: #f9f9ff;
 }
 
 .footer a:hover::after {
