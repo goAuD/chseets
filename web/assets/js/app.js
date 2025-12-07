@@ -1,5 +1,6 @@
 // /assets/js/app.js
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { CyberModal } from "/assets/js/modal.js";
 const PDFJS_CDN = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
 
 /* ---------------- Supabase ---------------- */
@@ -521,9 +522,9 @@ document.addEventListener('click', async (e) => {
         options: { emailRedirectTo: `${location.origin}/profile/` }
       });
       if (error) throw error;
-      alert("Magic link sent! Check your inbox and click the link to sign in.");
+      await CyberModal.alert('Magic link sent! Check your inbox and click the link to sign in.', 'Email Sent');
     } catch (err) {
-      alert(`Sign in failed: ${err.message}`);
+      await CyberModal.alert(`Sign in failed: ${err.message}`, 'Error');
     }
   }
   if (act === 'signout') {
@@ -537,19 +538,25 @@ document.addEventListener('click', async (e) => {
 
   // Delete Account
   if (act === 'delete-account') {
-    const confirmed = confirm('⚠️ Are you ABSOLUTELY sure you want to delete your account?\n\nThis will permanently delete:\n• All your uploaded files\n• All your published sheets\n• Your profile data\n\nThis action CANNOT be undone!');
+    const confirmed = await CyberModal.danger(
+      'This will permanently delete all your uploaded files, published sheets, and profile data. This action CANNOT be undone!',
+      'Delete Account'
+    );
     if (!confirmed) return;
 
-    const doubleConfirm = prompt('Type "DELETE" to confirm account deletion:');
-    if (doubleConfirm !== 'DELETE') {
-      alert('Account deletion cancelled.');
+    const typedValue = await CyberModal.prompt(
+      'Type "DELETE" to confirm account deletion:',
+      'Final Confirmation'
+    );
+    if (typedValue !== 'DELETE') {
+      await CyberModal.alert('Account deletion cancelled.', 'Cancelled');
       return;
     }
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        alert('You must be signed in to delete your account.');
+        await CyberModal.alert('You must be signed in to delete your account.', 'Error');
         return;
       }
 
