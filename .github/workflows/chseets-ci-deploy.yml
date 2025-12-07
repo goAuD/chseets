@@ -21,7 +21,7 @@
 #
 # =============================================================================
 
-name: CI/CD Pipeline
+name: Chseets CI/CD (Debian self-hosted rsync)
 
 on:
   # Push to main triggers full pipeline (CI + Deploy)

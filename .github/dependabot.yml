@@ -1,24 +1,26 @@
-## FILE: .github/dependabot.yml
-# Dependabot configuration for GitHub Actions and npm updates
-version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    assignees:
-      - "goAuD"
+# =============================================================================
+# Dependabot configuration - DISABLED
+# =============================================================================
+# Dependabot is disabled for this project to avoid unnecessary PRs.
+# The project is a vanilla HTML/CSS/JS site with minimal dependencies.
+# =============================================================================
 
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    assignees:
-      - "goAuD"
-    reviewers:
-      - "goAuD"
-    # Disable auto-merge - manual review preferred for dependencies
-    allow:
-      - dependency-type: "direct"
+# Uncomment below to re-enable Dependabot:
+#
+# version: 2
+# updates:
+#   - package-ecosystem: "github-actions"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"
+#     open-pull-requests-limit: 5
+#     assignees:
+#       - "goAuD"
+#
+#   - package-ecosystem: "npm"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"
+#     open-pull-requests-limit: 5
+#     assignees:
+#       - "goAuD"
