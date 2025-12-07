@@ -1178,7 +1178,7 @@ select:focus {
 .cyber-modal {
   background: linear-gradient(135deg, rgba(10, 10, 20, 0.98), rgba(20, 20, 40, 0.98));
   border: 1px solid var(--accent);
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 0;
   max-width: 400px;
   width: calc(100% - 32px);
@@ -1205,7 +1205,7 @@ select:focus {
   background: var(--scanline);
   pointer-events: none;
   opacity: 0.1;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* Corner accents */
