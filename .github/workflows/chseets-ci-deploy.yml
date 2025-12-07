@@ -81,9 +81,7 @@ jobs:
   deploy:
     name: Deploy to Debian (Caddy webroot)
     needs: ci
-    runs-on:
-      - self-hosted
-      - chseets
+    runs-on: self-hosted
     
     # SECURITY: Only run on push to main or manual dispatch
     # Never runs on pull_request or fork events
