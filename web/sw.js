@@ -1,4 +1,4 @@
-const CACHE = 'chseets-v9';
+const CACHE = 'chseets-v10';
 const ASSETS = [
     '/',
     '/index.html',

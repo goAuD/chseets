@@ -56,8 +56,7 @@
 
       <h4>Step 1: Get the API Key</h4>
       <p>Use our public anonymous key (included in examples below):</p>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdnFjanJ0c2J6bmFhcGhqaHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MjM3MDcsImV4cCI6MjA3NjE5OTcwN30.pICNfmmQTvXz-TcLHTFI5EaXWtVV_DUGK7wjufVFjuc</code></pre>
+      <pre><code>apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdnFjanJ0c2J6bmFhcGhqaHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MjM3MDcsImV4cCI6MjA3NjE5OTcwN30.pICNfmmQTvXz-TcLHTFI5EaXWtVV_DUGK7wjufVFjuc</code></pre>
 
       <h4>Step 2: Make a Request</h4>
       <p>Include the API key in your request headers.</p>
@@ -68,26 +67,22 @@
 
       <h4>GET /sheets_meta</h4>
       <p>List all published sheets. Returns metadata for all publicly available cheat sheets.</p>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>GET /rest/v1/sheets_meta?select=*&published=eq.true&limit=50</code></pre>
+      <pre><code>GET /rest/v1/sheets_meta?select=*&published=eq.true&limit=50</code></pre>
 
       <h4>GET /sheets_meta?slug=eq.{slug}</h4>
       <p>Get single sheet. Fetch a specific sheet by its URL slug.</p>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>GET /rest/v1/sheets_meta?slug=eq.javascript-basics&select=*</code></pre>
+      <pre><code>GET /rest/v1/sheets_meta?slug=eq.javascript-basics&select=*</code></pre>
 
       <h4>GET /sheets_meta?title=ilike.*keyword*</h4>
       <p>Search sheets by title (case insensitive).</p>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>GET /rest/v1/sheets_meta?title=ilike.*python*&published=eq.true</code></pre>
+      <pre><code>GET /rest/v1/sheets_meta?title=ilike.*python*&published=eq.true</code></pre>
     </div>
 
     <div class="card">
       <h3>Code Examples</h3>
 
       <h4>JavaScript (fetch)</h4>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>const API_URL = 'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1';
+      <pre><code>const API_URL = 'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1';
 const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Use full key
 
 fetch(`${API_URL}/sheets_meta?select=*&published=eq.true&limit=10`, {
@@ -101,8 +96,7 @@ fetch(`${API_URL}/sheets_meta?select=*&published=eq.true&limit=10`, {
 .catch(err => console.error(err));</code></pre>
 
       <h4>Python (requests)</h4>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>import requests
+      <pre><code>import requests
 
 API_URL = 'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1'
 API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
@@ -121,8 +115,7 @@ response = requests.get(
 print(response.json())</code></pre>
 
       <h4>cURL</h4>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>curl -X GET \
+      <pre><code>curl -X GET \
   'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1/sheets_meta?select=*&published=eq.true&limit=5' \
   -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
   -H 'Content-Type: application/json'</code></pre>
@@ -131,8 +124,7 @@ print(response.json())</code></pre>
     <div class="card">
       <h3>Response Format</h3>
       <p>All responses are JSON arrays. Example sheet object:</p>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>{
+      <pre><code>{
   "id": "a1b2c3d4...",
   "title": "JavaScript Basics",
   "slug": "javascript-basics",
@@ -147,8 +139,7 @@ print(response.json())</code></pre>
 
       <h4>Get File URL</h4>
       <p>Construct the download URL from <code>storage_path</code>:</p>
-      <pre
-        style="background: #0a0a14; padding: 12px; overflow-x: auto; border: 1px solid var(--border); font-size: 0.85rem;"><code>https://zpvqcjrtsbznaaphjhug.supabase.co/storage/v1/object/public/sheets/{storage_path}</code></pre>
+      <pre><code>https://zpvqcjrtsbznaaphjhug.supabase.co/storage/v1/object/public/sheets/{storage_path}</code></pre>
     </div>
 
     <div class="card">
