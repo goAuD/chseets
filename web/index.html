@@ -61,32 +61,33 @@
       banner.id = 'pwa-install-banner';
       banner.innerHTML = isNativePrompt ? `
         <div class="pwa-install-content">
-          <span>📱 Install chseets app for quick access!</span>
-          <button id="pwa-install-btn" class="btn">Install</button>
-          <button id="pwa-dismiss-btn" class="btn-sm">✕</button>
+          <span class="pwa-text">INSTALL CHSEETS</span>
+          <button id="pwa-install-btn" class="btn btn-sm">Install</button>
+          <button id="pwa-dismiss-btn" class="pwa-close">×</button>
         </div>
       ` : `
         <div class="pwa-install-content">
-          <span>📱 Install chseets as an app!</span>
-          <a href="/pwa/" class="btn">How to Install</a>
-          <button id="pwa-dismiss-btn" class="btn-sm">✕</button>
+          <span class="pwa-text">GET THE APP</span>
+          <a href="/pwa/" class="btn btn-sm">How to Install</a>
+          <button id="pwa-dismiss-btn" class="pwa-close">×</button>
         </div>
       `;
       banner.style.cssText = `
-        display: block;
+        display: flex;
         position: fixed;
-        bottom: 20px;
+        bottom: 16px;
         left: 50%;
         transform: translateX(-50%);
-        background: linear-gradient(135deg, rgba(5,5,16,0.98), rgba(20,20,35,0.98));
-        border: 1px solid #00f3ff;
-        border-radius: 12px;
-        padding: 14px 24px;
+        background: linear-gradient(135deg, rgba(5,5,16,0.95), rgba(15,15,30,0.95));
+        border: 1px solid var(--neon-cyan, #00f3ff);
+        border-radius: 2px;
+        padding: 8px 16px;
         z-index: 9999;
-        box-shadow: 0 8px 32px rgba(0,243,255,0.25), 0 0 20px rgba(0,243,255,0.1);
-        backdrop-filter: blur(12px);
-        max-width: 90vw;
-        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,243,255,0.2);
+        backdrop-filter: blur(8px);
+        max-width: 320px;
+        align-items: center;
+        gap: 12px;
       `;
       return banner;
     }
