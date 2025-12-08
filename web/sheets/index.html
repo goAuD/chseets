@@ -109,7 +109,6 @@
     let items = [];
 
     async function load() {
-      console.log('[SHEETS] Loading sheets from Supabase...');
       const { data, error } = await supabase
         .from('sheets_meta')
         .select('slug,title,description,tags,lang,storage_path,preview_path,downloads,created_at')
@@ -123,7 +122,6 @@
         return;
       }
       items = data || [];
-      console.log('[SHEETS] Loaded', items.length, 'sheets:', items);
       render();
     }
 

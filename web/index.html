@@ -44,11 +44,8 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-          .then(reg => {
-            console.log('SW registered:', reg);
-            reg.update();
-          })
-          .catch(err => console.log('SW registration failed:', err));
+          .then(reg => reg.update())
+          .catch(err => console.error('SW registration failed:', err));
       });
     }
 
@@ -97,7 +94,7 @@
 
       const banner = createInstallBanner(true);
       document.body.appendChild(banner);
-      console.log('PWA install prompt ready');
+
     });
 
     // Show fallback banner for Firefox/Safari after delay
@@ -110,7 +107,7 @@
         if (!isStandalone && !hasNativePrompt && !isChromium && !installBannerShown) {
           const banner = createInstallBanner(false);
           document.body.appendChild(banner);
-          console.log('Showing manual install banner for Firefox/Safari');
+
         }
       }, 3000);
     });
@@ -119,7 +116,7 @@
       if (e.target.id === 'pwa-install-btn' && deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((result) => {
-          console.log('PWA install result:', result.outcome);
+
           deferredPrompt = null;
           document.getElementById('pwa-install-banner')?.remove();
         });
@@ -131,7 +128,7 @@
     });
 
     window.addEventListener('appinstalled', () => {
-      console.log('PWA was installed');
+
       document.getElementById('pwa-install-banner')?.remove();
     });
   </script>
@@ -289,7 +286,7 @@
     if (signinBtn) {
       signinBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        console.log('[SIGNIN] Sign in button clicked');
+
 
         const username = document.getElementById('signin-username').value.trim();
         const email = document.getElementById('signin-email').value.trim();
@@ -300,7 +297,7 @@
           return;
         }
 
-        console.log('[SIGNIN] Sending magic link to:', email, 'for user:', username);
+
         signinMessage.textContent = 'Sending magic link...';
         signinMessage.style.color = 'var(--accent)';
 
@@ -318,7 +315,7 @@
             signinMessage.textContent = `❌ Error: ${error.message}`;
             signinMessage.style.color = 'var(--neon-pink)';
           } else {
-            console.log('[SIGNIN] Magic link sent successfully!');
+
             signinMessage.textContent = '✅ Check your email for the magic link!';
             signinMessage.style.color = '#00ff88';
 
@@ -340,13 +337,13 @@
         e.preventDefault();
         if (signoutBtn.disabled) return;
 
-        console.log('[SIGNOUT] Sign out button clicked');
+
         signinMessage.textContent = 'Signing out...';
         signinMessage.style.color = 'var(--accent)';
 
         try {
           await supabase.auth.signOut();
-          console.log('[SIGNOUT] Signed out successfully');
+
           signinMessage.textContent = '✅ Signed out successfully!';
           signinMessage.style.color = '#00ff88';
 
@@ -367,7 +364,7 @@
 
     // Check auth state and enable/disable sign in/out buttons
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log('[AUTH] State changed:', event, session?.user?.email);
+
       if (signinBtn) {
         signinBtn.disabled = !!session; // Disable when logged in
       }

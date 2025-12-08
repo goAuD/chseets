@@ -279,15 +279,12 @@ async function makePublic(path, cleanName) {
   const { data: fileBlob, error: dlErr } = await supabase.storage.from('sheets').download(path);
   if (dlErr) throw dlErr;
 
-  console.log('[MAKE PUBLIC] Uploading to:', publicPath);
-  console.log('[MAKE PUBLIC] File size:', fileBlob?.size, 'type:', fileBlob?.type);
 
   const { data: upData, error: upErr } = await supabase.storage.from('sheets').upload(publicPath, fileBlob, {
     upsert: true,
     contentType: fileBlob.type || 'application/octet-stream'
   });
 
-  console.log('[MAKE PUBLIC] Upload result:', { data: upData, error: upErr });
   if (upErr) throw upErr;
 
   // 2) preview készítése (kép => saját fájl; PDF => első oldal PNG)
@@ -326,14 +323,11 @@ async function makePublic(path, cleanName) {
     published: true
   };
 
-  console.log('[MAKE PUBLIC] auth.uid():', user?.id);
-  console.log('[MAKE PUBLIC] row to insert:', row);
 
   const { data: upsertData, error: metaErr } = await supabase.from('sheets_meta')
     .upsert(row, { onConflict: 'slug', ignoreDuplicates: false })
     .select();
 
-  console.log('[MAKE PUBLIC] upsert result:', { data: upsertData, error: metaErr });
   if (metaErr) throw metaErr;
 }
 
@@ -421,13 +415,10 @@ document.addEventListener('click', async (e) => {
     const slug = fileName.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const previewPath = `public/previews/${slug}.png`;
 
-    console.log('[DELETE] Starting delete for:', { path, cleanName, publicPath, previewPath });
 
     // 1) Storage: fő fájl törlése
     try {
-      console.log('[DELETE] Removing from storage:', path);
       const { data: removeData, error: storageErr } = await supabase.storage.from('sheets').remove([path]);
-      console.log('[DELETE] Storage remove result:', { data: removeData, error: storageErr });
       if (storageErr) {
         alert(`Delete failed: ${storageErr.message}`);
         return;
@@ -440,12 +431,10 @@ document.addEventListener('click', async (e) => {
 
     // 2) DB meta: publik meta sor törlése (ha volt publish)
     try {
-      console.log('[DELETE] Deleting from sheets_meta where storage_path =', publicPath);
       const { data: delData, error: dbErr } = await supabase.from('sheets_meta')
         .delete()
         .eq('storage_path', publicPath)
         .select();
-      console.log('[DELETE] sheets_meta delete result:', { data: delData, error: dbErr });
       if (dbErr) {
         console.warn('DB delete error:', dbErr);
         alert('Warning: metadata removal failed. Admins should check the database.');
@@ -456,7 +445,6 @@ document.addEventListener('click', async (e) => {
 
     // 3) Public copy törlése (ha volt publish)
     try {
-      console.log('[DELETE] Removing public copy:', publicPath);
       const { error: publicErr } = await supabase.storage.from('sheets').remove([publicPath]);
       if (publicErr && !publicErr.message?.toLowerCase().includes('not found')) {
         console.warn('Public file remove error:', publicErr);
@@ -467,7 +455,6 @@ document.addEventListener('click', async (e) => {
 
     // 4) Preview törlés (best-effort)
     try {
-      console.log('[DELETE] Removing preview:', previewPath);
       const { error: previewErr } = await supabase.storage.from('sheets').remove([previewPath]);
       if (previewErr && previewErr.message?.toLowerCase().includes('object not found') === false) {
         console.warn('Preview remove error:', previewErr);
@@ -609,7 +596,6 @@ supabase.auth.onAuthStateChange((event, session) => {
   if (user) {
     listMyFiles(user);
     if (event === 'SIGNED_IN') {
-      console.log('Successfully signed in as:', user.email);
     }
   }
 });
