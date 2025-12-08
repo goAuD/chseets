@@ -85,7 +85,7 @@ const CyberModal = {
 
         // Update title color for danger modals (border is on wrapper via neon-frame)
         if (isDanger) {
-            titleEl.style.color = 'var(--pulse)';
+            titleEl.style.color = 'var(--danger)';
         } else {
             titleEl.style.color = 'var(--accent)';
         }

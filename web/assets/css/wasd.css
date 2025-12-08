@@ -32,6 +32,7 @@
 
   --accent: var(--neon-cyan);
   --pulse: var(--neon-pink);
+  --danger: #ff003c;
 
   --card: #0a0a14;
   --border: #1f1f3a;
@@ -355,7 +356,7 @@ pre code {
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
-  border: 1px solid var(--accent);
+  border: 0px solid var(--accent);
   background: transparent;
   color: var(--accent);
   font-size: var(--fs-1);
@@ -418,7 +419,7 @@ pre code {
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
-  border: 1px solid var(--neon-pink);
+  border: 0px solid var(--neon-pink);
   background: transparent;
   color: var(--neon-pink);
   font-size: var(--fs-1);
@@ -460,7 +461,7 @@ pre code {
 .btn-sm {
   padding: 4px 10px;
   font-size: var(--fs-0);
-  border: 1px solid var(--accent);
+  border: 0px solid var(--accent);
   background: transparent;
   color: var(--accent);
   cursor: pointer;
@@ -697,7 +698,7 @@ pre code {
   font-size: var(--fs-1);
   margin-bottom: 4px;
   position: relative;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 /* Animated underline */
@@ -1325,7 +1326,7 @@ select:focus {
   font-size: var(--fs-1);
   text-transform: uppercase;
   letter-spacing: 1px;
-  border: 1px solid var(--border);
+  border: 0px solid var(--border);
   border-radius: 2px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -1343,25 +1344,35 @@ select:focus {
 }
 
 .cyber-modal-btn-primary {
-  background: linear-gradient(135deg, rgba(0, 243, 255, 0.15), rgba(0, 243, 255, 0.05));
+  background: transparent;
+  background-image: linear-gradient(90deg, var(--accent) 0%, var(--accent) 100%);
+  background-size: 0% 100%;
+  background-position: left;
+  background-repeat: no-repeat;
   color: var(--accent);
   border-color: var(--accent);
+  transition: background-size 0.3s var(--ease-tech), color 0.2s ease;
 }
 
 .cyber-modal-btn-primary:hover {
-  background: linear-gradient(135deg, rgba(0, 243, 255, 0.25), rgba(0, 243, 255, 0.1));
-  box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+  background-size: 100% 100%;
+  color: var(--bg);
 }
 
 .cyber-modal-btn-danger {
-  background: linear-gradient(135deg, rgba(255, 0, 60, 0.15), rgba(255, 0, 60, 0.05));
-  color: var(--pulse);
-  border-color: var(--pulse);
+  background: transparent;
+  background-image: linear-gradient(90deg, var(--danger) 0%, var(--danger) 100%);
+  background-size: 0% 100%;
+  background-position: left;
+  background-repeat: no-repeat;
+  color: var(--danger);
+  border-color: var(--danger);
+  transition: background-size 0.3s var(--ease-tech), color 0.2s ease;
 }
 
 .cyber-modal-btn-danger:hover {
-  background: linear-gradient(135deg, rgba(255, 0, 60, 0.25), rgba(255, 0, 60, 0.1));
-  box-shadow: 0 0 20px rgba(255, 0, 60, 0.3);
+  background-size: 100% 100%;
+  color: var(--bg);
 }
 
 /* Glowing border animation */
@@ -1487,6 +1498,11 @@ select:focus {
 
 .cyber-modal-wrapper.neon-frame::after {
   background: linear-gradient(135deg, rgba(10, 10, 20, 0.98), rgba(20, 20, 40, 0.98));
+}
+
+/* Modal hover: csak border animáció, glow nélkül */
+.cyber-modal-wrapper.neon-frame:hover::before {
+  filter: none;
 }
 
 /* --- Sheet card neon-frame override --- */
