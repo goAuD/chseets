@@ -195,7 +195,7 @@ h3,
 h4,
 .brand,
 .btn {
-  font-family: var(--font-main);
+  font-family: var(--font-cyber);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
