@@ -24,7 +24,7 @@
 ### Kód minőség
 
 - [x] Console.log debug üzenetek eltávolítása
-- [ ] CSS refaktor (duplikáció csökkentés, :root változók)
+- [x] CSS refaktor (hardcoded → :root változók, inline styles → CSS)
 
 ## Befejezve (2025.12.08)
 

@@ -33,10 +33,17 @@
   --accent: var(--neon-cyan);
   --pulse: var(--neon-pink);
   --danger: #ff003c;
+  --success: #00ff88;
 
   --card: #0a0a14;
   --border: #1f1f3a;
   --border-active: #3f3f6a;
+
+  /* Utility colors */
+  --black: #000;
+  --bg-dark: #0c0f13;
+  --bg-darker: #111;
+  --disabled: #666;
 
   /* Layout scale */
   --space-1: 4px;
@@ -380,7 +387,7 @@ pre code {
 }
 
 .btn:hover {
-  color: #0c0f13;
+  color: var(--bg-dark);
   box-shadow: 0 0 15px var(--accent);
 }
 
@@ -389,8 +396,8 @@ pre code {
 }
 
 .btn:disabled {
-  color: #666;
-  border-color: #666;
+  color: var(--disabled);
+  border-color: var(--disabled);
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -402,7 +409,7 @@ pre code {
 /* Active/click state - magenta flash */
 .btn:active:not(:disabled) {
   background: var(--neon-pink);
-  color: #0c0f13;
+  color: var(--bg-dark);
   box-shadow: 0 0 20px var(--neon-pink);
   transform: scale(0.97);
 }
@@ -443,7 +450,7 @@ pre code {
 }
 
 .btn-pink:hover:not(:disabled) {
-  color: #0c0f13;
+  color: var(--bg-dark);
   box-shadow: 0 0 15px var(--neon-pink);
 }
 
@@ -452,8 +459,8 @@ pre code {
 }
 
 .btn-pink:disabled {
-  color: #666;
-  border-color: #666;
+  color: var(--disabled);
+  border-color: var(--disabled);
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -470,12 +477,12 @@ pre code {
 
 .btn-sm:hover {
   background: var(--accent);
-  color: #000;
+  color: var(--black);
 }
 
 .btn-sm:active {
   background: var(--neon-pink);
-  color: #000;
+  color: var(--black);
   box-shadow: 0 0 15px var(--neon-pink);
   transform: scale(0.95);
 }
@@ -515,7 +522,7 @@ pre code {
 .hero-card-thumb {
   height: 200px;
   width: 100%;
-  background: #000;
+  background: var(--black);
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
@@ -585,7 +592,7 @@ pre code {
 }
 
 .card-file:hover .meta {
-  color: #f9f9ff;
+  color: var(--neon-white);
 }
 
 .card-file .actions {
@@ -602,7 +609,7 @@ pre code {
 .card-file .thumb {
   display: block;
   height: 150px;
-  background: #000;
+  background: var(--black);
   margin-bottom: 12px;
   overflow: hidden;
 }
@@ -714,7 +721,7 @@ pre code {
 }
 
 .footer a:hover {
-  color: #f9f9ff;
+  color: var(--neon-white);
 }
 
 .footer a:hover::after {
@@ -741,6 +748,33 @@ select:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+}
+
+/* ============== SIGNIN CARD ============== */
+.signin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.signin-input {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.signin-message {
+  margin-top: var(--space-3);
+  font-size: var(--fs-0);
+  opacity: 0.7;
 }
 
 /* ============== HAMBURGER MENU (Always visible) ============== */
@@ -1030,7 +1064,17 @@ select:focus {
 
 /* ============== PANEL (tabs) ============== */
 .panel {
-  margin-top: 16px;
+  margin-top: var(--space-4);
+}
+
+.panel.hidden {
+  display: none;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
 }
 
 .tab-buttons .btn {
@@ -1040,6 +1084,29 @@ select:focus {
 .tab-buttons .btn.active,
 .tab-buttons .btn:hover {
   opacity: 1;
+}
+
+/* ============== DANGER ZONE ============== */
+.card-danger {
+  border-color: var(--danger);
+}
+
+.card-danger h3 {
+  color: var(--danger);
+}
+
+.card-danger h4 {
+  margin-top: var(--space-4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), #cc0030);
+  border-color: var(--danger);
+  color: var(--neon-white);
+}
+
+.btn-danger:hover {
+  box-shadow: var(--shadow-pink);
 }
 
 /* ============== FILTER SORT CONTAINER ============== */
@@ -1098,7 +1165,7 @@ select:focus {
   width: 100%;
   aspect-ratio: 210 / 297;
   /* A4 ratio */
-  background: #000;
+  background: var(--black);
   overflow: hidden;
   position: relative;
 }
@@ -1107,7 +1174,7 @@ select:focus {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: #111;
+  background: var(--bg-darker);
 }
 
 .sheet-card .preview .no-preview {

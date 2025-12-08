@@ -185,17 +185,17 @@
       </div>
 
       <div class="card" id="signin-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <button id="signin-btn" class="btn" style="padding: 6px 16px;">Sign in</button>
-          <button id="signout-btn" class="btn-pink" style="padding: 6px 16px;" disabled>Sign out</button>
+        <div class="signin-header">
+          <button id="signin-btn" class="btn">Sign in</button>
+          <button id="signout-btn" class="btn-pink" disabled>Sign out</button>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="signin-form">
           <input type="text" id="signin-username" name="username" placeholder="Your name" autocomplete="name"
-            style="padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); font-family: inherit; border-radius: 4px;">
+            class="signin-input">
           <input type="email" id="signin-email" name="email" placeholder="your@email.com" autocomplete="email"
-            style="padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); font-family: inherit; border-radius: 4px;">
+            class="signin-input">
         </div>
-        <div id="signin-message" style="margin-top: 12px; font-size: var(--fs-0); opacity: 0.7;"></div>
+        <div id="signin-message" class="signin-message"></div>
       </div>
     </section>
   </main>
