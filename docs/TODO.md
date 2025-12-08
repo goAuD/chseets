@@ -2,14 +2,9 @@
 
 ## Prioritás: Magas
 
-### UI/UX Javítások
-
-- [ ] Custom modal/popup design (cyberpunk stílus)
-- [ ] PWA install banner méret csökkentése mobilon (media query)
-
 ### Lighthouse optimalizáció
 
-- [x] Font preload hozzáadása (kész)
+- [x] Font preload hozzáadása
 - [ ] HTML/CSS tömörítés (gzip a serveren)
 - [ ] Supabase import optimalizálás (dynamic import)
 - [ ] Képek WebP formátum
@@ -28,20 +23,25 @@
 ### Kód minőség
 
 - [ ] Console.log debug üzenetek eltávolítása
+- [ ] CSS refaktor (duplikáció csökkentés, :root változók)
 
-## Befejezve (2025.12.06-07)
+## Befejezve (2025.12.07-08)
 
-- [x] PWA manifest, SW, install prompt
-- [x] API dokumentáció
-- [x] /pwa/ telepítési oldal
-- [x] Navigáció frissítése minden oldalon
-- [x] Landing page szövegek
-- [x] Legal oldalak DSGVO szerint
-- [x] About oldal (turizmus + edukáció fókusz)
-- [x] Font preload + async CSS (Lighthouse)
-- [x] Account törlés gomb (Danger Zone, dupla megerősítés)
-- [x] CI/CD deploy workflow fix
-- [x] Markdown linter fix
+- [x] Self-hosted runner setup (Debian)
+- [x] CI/CD workflow: push → CI → Deploy (rsync)
+- [x] Workflow mappa tisztítás
+- [x] Dependabot kikapcsolva
+- [x] PWA banner redesign (szögletes, Zen Dots, neon-frame)
+- [x] Firefox PWA link javítás
+- [x] Cyberpunk modal system (CyberModal API)
+- [x] Neon-frame animált border (PWA, modal, sheet cards)
+- [x] Modal wrapper fix (sötét belső háttér megmaradt)
+- [x] Danger modal piros szín (#ff003c)
+- [x] Gombok balról beúszó háttér animáció
+- [x] Footer hover: fehér szín, no glow
+- [x] API oldal iOS zoom fix
+- [x] SW verzió bump (v10)
+- [x] Account törlés gomb (Danger Zone)
 
 ## Lighthouse eredmények (2025.12.06)
 
