@@ -20,16 +20,18 @@ const CyberModal = {
         this.overlay = document.createElement('div');
         this.overlay.className = 'cyber-modal-overlay';
         this.overlay.innerHTML = `
-      <div class="cyber-modal neon-frame" role="dialog" aria-modal="true">
-        <div class="cyber-modal-header">
-          <h3 class="cyber-modal-title"></h3>
-          <button class="cyber-modal-close" aria-label="Close">×</button>
+      <div class="cyber-modal-wrapper neon-frame">
+        <div class="cyber-modal" role="dialog" aria-modal="true">
+          <div class="cyber-modal-header">
+            <h3 class="cyber-modal-title"></h3>
+            <button class="cyber-modal-close" aria-label="Close">×</button>
+          </div>
+          <div class="cyber-modal-body">
+            <p class="cyber-modal-message"></p>
+            <input type="text" class="cyber-modal-input" style="display: none;">
+          </div>
+          <div class="cyber-modal-footer"></div>
         </div>
-        <div class="cyber-modal-body">
-          <p class="cyber-modal-message"></p>
-          <input type="text" class="cyber-modal-input" style="display: none;">
-        </div>
-        <div class="cyber-modal-footer"></div>
       </div>
     `;
         document.body.appendChild(this.overlay);
@@ -81,12 +83,10 @@ const CyberModal = {
             messageEl.style.marginBottom = '0';
         }
 
-        // Update border color for danger modals
+        // Update title color for danger modals (border is on wrapper via neon-frame)
         if (isDanger) {
-            modal.style.borderColor = 'var(--pulse)';
             titleEl.style.color = 'var(--pulse)';
         } else {
-            modal.style.borderColor = 'var(--accent)';
             titleEl.style.color = 'var(--accent)';
         }
 

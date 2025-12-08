@@ -1203,22 +1203,21 @@ select:focus {
 
 .cyber-modal {
   background: linear-gradient(135deg, rgba(10, 10, 20, 0.98), rgba(20, 20, 40, 0.98));
-  border: 1px solid var(--accent);
-  border-radius: 4px;
+  border: none;
+  border-radius: var(--r-md);
   padding: 0;
-  max-width: 400px;
-  width: calc(100% - 32px);
+  width: 100%;
   position: relative;
+  z-index: 1;
+}
+
+.cyber-modal-wrapper {
   transform: translateY(-20px) scale(0.95);
   opacity: 0;
   transition: all 0.3s var(--ease-tech);
-  box-shadow:
-    0 0 40px rgba(0, 243, 255, 0.15),
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.cyber-modal-overlay.active .cyber-modal {
+.cyber-modal-overlay.active .cyber-modal-wrapper {
   transform: translateY(0) scale(1);
   opacity: 1;
 }
@@ -1480,12 +1479,13 @@ select:focus {
   background: linear-gradient(135deg, rgba(5, 5, 16, 0.95), rgba(15, 15, 30, 0.95));
 }
 
-/* --- Modal neon-frame override --- */
-.cyber-modal.neon-frame {
-  border: none;
+/* --- Modal wrapper neon-frame --- */
+.cyber-modal-wrapper.neon-frame {
+  max-width: 400px;
+  width: calc(100% - 32px);
 }
 
-.cyber-modal.neon-frame::after {
+.cyber-modal-wrapper.neon-frame::after {
   background: linear-gradient(135deg, rgba(10, 10, 20, 0.98), rgba(20, 20, 40, 0.98));
 }
 
