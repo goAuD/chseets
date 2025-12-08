@@ -13,7 +13,7 @@
   "devDependencies": {
     "ajv": "^8.17.1",
     "http-server": "^14.1.1",
-    "markdownlint-cli2": "^0.19.1"
+    "markdownlint-cli2": "^0.20.0"
   },
   "scripts": {
     "start": "http-server web -p 8000 -c-1 --cors",
