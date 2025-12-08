@@ -20,7 +20,7 @@ const CyberModal = {
         this.overlay = document.createElement('div');
         this.overlay.className = 'cyber-modal-overlay';
         this.overlay.innerHTML = `
-      <div class="cyber-modal" role="dialog" aria-modal="true">
+      <div class="cyber-modal neon-frame" role="dialog" aria-modal="true">
         <div class="cyber-modal-header">
           <h3 class="cyber-modal-title"></h3>
           <button class="cyber-modal-close" aria-label="Close">×</button>

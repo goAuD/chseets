@@ -26,6 +26,9 @@
   --neon-cyan: #00f3ff;
   --neon-pink: #ff2fd8;
   --neon-yellow: #fcee0a;
+  --neon-white: #f9f9ff;
+  --neon-glow-soft: 0 0 6px rgba(0, 243, 255, 0.3);
+  --neon-glow-strong: 0 0 12px rgba(255, 47, 216, 0.55);
 
   --accent: var(--neon-cyan);
   --pulse: var(--neon-pink);
@@ -1400,4 +1403,113 @@ select:focus {
     width: 100%;
     text-align: center;
   }
+}
+
+/* ============== NEON FRAME UTILITY ============== */
+/* Animált gradient keret: PWA banner, modalok, sheet kártyák */
+
+.neon-frame {
+  position: relative;
+  border-radius: var(--r-md);
+  z-index: 0;
+}
+
+/* Animált gradient border réteg */
+.neon-frame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg,
+      var(--neon-white),
+      var(--neon-cyan),
+      var(--neon-pink),
+      var(--neon-white));
+  background-size: 200% 200%;
+  z-index: -2;
+  animation: neon-frame-spin 15s linear infinite;
+  filter: drop-shadow(var(--neon-glow-soft));
+  opacity: 0.7;
+}
+
+/* Belső maszk - sötét háttér */
+.neon-frame::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--card);
+  z-index: -1;
+}
+
+/* Animáció keyframes */
+@keyframes neon-frame-spin {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hover: gyorsabb + erősebb glow */
+.neon-frame:hover::before,
+.neon-frame.is-active::before {
+  animation-duration: 8s;
+  filter: drop-shadow(var(--neon-glow-strong));
+  opacity: 0.9;
+}
+
+/* Accessibility: csökkentett mozgás */
+@media (prefers-reduced-motion: reduce) {
+  .neon-frame::before {
+    animation: none;
+    background-position: 50% 50%;
+    filter: none;
+    opacity: 0.6;
+  }
+}
+
+/* --- PWA Banner neon-frame override --- */
+#pwa-install-banner.neon-frame::after {
+  background: linear-gradient(135deg, rgba(5, 5, 16, 0.95), rgba(15, 15, 30, 0.95));
+}
+
+/* --- Modal neon-frame override --- */
+.cyber-modal.neon-frame {
+  border: none;
+}
+
+.cyber-modal.neon-frame::after {
+  background: linear-gradient(135deg, rgba(10, 10, 20, 0.98), rgba(20, 20, 40, 0.98));
+}
+
+/* --- Sheet card neon-frame override --- */
+/* Alapállapotban statikus border, animáció csak hover/active */
+.sheet-card.neon-frame {
+  border: none;
+}
+
+.sheet-card.neon-frame::before {
+  animation: none;
+  background-position: 50% 50%;
+}
+
+.sheet-card.neon-frame:hover::before,
+.sheet-card.neon-frame.is-active::before {
+  animation: neon-frame-spin 8s linear infinite;
+}
+
+.sheet-card.neon-frame:hover {
+  box-shadow: none;
+  transform: translateY(-4px);
+}
+
+.sheet-card.neon-frame::after {
+  background: var(--card);
 }
