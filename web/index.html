@@ -59,15 +59,13 @@
       banner.className = 'neon-frame';
       banner.innerHTML = isNativePrompt ? `
         <div class="pwa-install-content">
-          <span class="pwa-text">INSTALL CHSEETS</span>
           <button id="pwa-install-btn" class="btn btn-sm">Install</button>
-          <button id="pwa-dismiss-btn" class="pwa-close">×</button>
+          <button id="pwa-dismiss-btn" class="btn btn-sm btn-exit">Exit</button>
         </div>
       ` : `
         <div class="pwa-install-content">
-          <span class="pwa-text">GET THE APP</span>
-          <a href="/pwa/" class="btn btn-sm">How to Install</a>
-          <button id="pwa-dismiss-btn" class="pwa-close">×</button>
+          <a href="/pwa/" class="btn btn-sm">Install</a>
+          <button id="pwa-dismiss-btn" class="btn btn-sm btn-exit">Exit</button>
         </div>
       `;
       banner.style.cssText = `
@@ -79,9 +77,9 @@
         padding: 8px 16px;
         z-index: 9999;
         backdrop-filter: blur(8px);
-        max-width: 320px;
+        max-width: 280px;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
       `;
       return banner;
     }
