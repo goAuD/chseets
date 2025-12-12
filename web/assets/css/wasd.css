@@ -731,6 +731,28 @@ pre code {
   width: 100%;
 }
 
+/* Footer grid layout */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 24px;
+}
+
+/* Footer category headers - Zen Dots font from root */
+.footer .footer-category h4,
+.footer-grid .footer-category h4 {
+  font-family: var(--font-cyber) !important;
+  font-size: var(--fs-1);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px 0;
+}
+
+.footer-category a {
+  display: block;
+}
+
 /* ============== FORMS ============== */
 input,
 textarea,

@@ -14,8 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/wasd.css?v=20241208B">
-  <script type="module" src="/assets/js/app.js?v=20241208B"></script>
+  <link rel="stylesheet" href="/assets/css/wasd.css?v=20241212">
+  <script type="module" src="/assets/js/app.js?v=20241212"></script>
 </head>
 
 <body>
@@ -46,121 +46,106 @@
     <div class="card">
       <h2>chseets Public API</h2>
       <p>Access our cheat sheet database programmatically. The API is <strong>free, open, and requires no
-          authentication</strong> for public data.</p>
-      <p><strong>Base URL:</strong> <code>https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1/</code></p>
+          authentication</strong>.</p>
+      <p><strong>Base URL:</strong> <code>https://chseets.com/api</code></p>
     </div>
 
     <div class="card">
-      <h3>Quick Start</h3>
-      <p>Follow these steps to make your first API call:</p>
+      <h3>Endpoints</h3>
 
-      <h4>Step 1: Get the API Key</h4>
-      <p>Use our public anonymous key (included in examples below):</p>
-      <pre><code>apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwdnFjanJ0c2J6bmFhcGhqaHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MjM3MDcsImV4cCI6MjA3NjE5OTcwN30.pICNfmmQTvXz-TcLHTFI5EaXWtVV_DUGK7wjufVFjuc</code></pre>
+      <h4>GET /api/meta</h4>
+      <p>API version and metadata.</p>
+      <pre><code>curl https://chseets.com/api/meta</code></pre>
 
-      <h4>Step 2: Make a Request</h4>
-      <p>Include the API key in your request headers.</p>
-    </div>
+      <h4>GET /api/sheets</h4>
+      <p>List all published sheets. Supports optional <code>?page=</code> and <code>?limit=</code> query params.</p>
+      <pre><code>curl https://chseets.com/api/sheets</code></pre>
 
-    <div class="card">
-      <h3>Available Endpoints</h3>
+      <h4>GET /api/sheets/{slug}</h4>
+      <p>Fetch a single sheet by its URL slug.</p>
+      <pre><code>curl https://chseets.com/api/sheets/javascript-basics</code></pre>
 
-      <h4>GET /sheets_meta</h4>
-      <p>List all published sheets. Returns metadata for all publicly available cheat sheets.</p>
-      <pre><code>GET /rest/v1/sheets_meta?select=*&published=eq.true&limit=50</code></pre>
-
-      <h4>GET /sheets_meta?slug=eq.{slug}</h4>
-      <p>Get single sheet. Fetch a specific sheet by its URL slug.</p>
-      <pre><code>GET /rest/v1/sheets_meta?slug=eq.javascript-basics&select=*</code></pre>
-
-      <h4>GET /sheets_meta?title=ilike.*keyword*</h4>
-      <p>Search sheets by title (case insensitive).</p>
-      <pre><code>GET /rest/v1/sheets_meta?title=ilike.*python*&published=eq.true</code></pre>
+      <h4>POST /api/search</h4>
+      <p>Search sheets by keyword. Send JSON body with <code>q</code> field.</p>
+      <pre><code>curl -X POST https://chseets.com/api/search \
+  -H "Content-Type: application/json" \
+  -d '{"q": "java"}'</code></pre>
     </div>
 
     <div class="card">
       <h3>Code Examples</h3>
 
       <h4>JavaScript (fetch)</h4>
-      <pre><code>const API_URL = 'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1';
-const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Use full key
+      <pre><code>// List all sheets
+fetch('https://chseets.com/api/sheets')
+  .then(res => res.json())
+  .then(data => console.log(data.results))
+  .catch(err => console.error(err));
 
-fetch(`${API_URL}/sheets_meta?select=*&published=eq.true&limit=10`, {
-  headers: {
-    'apikey': API_KEY,
-    'Content-Type': 'application/json'
-  }
+// Get single sheet
+fetch('https://chseets.com/api/sheets/javascript-basics')
+  .then(res => res.json())
+  .then(sheet => console.log(sheet));
+
+// Search
+fetch('https://chseets.com/api/search', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ q: 'python' })
 })
-.then(res => res.json())
-.then(data => console.log(data))
-.catch(err => console.error(err));</code></pre>
+  .then(res => res.json())
+  .then(data => console.log(data.results));</code></pre>
 
       <h4>Python (requests)</h4>
       <pre><code>import requests
 
-API_URL = 'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1'
-API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+# List all sheets
+response = requests.get('https://chseets.com/api/sheets')
+print(response.json())
 
-headers = {
-    'apikey': API_KEY,
-    'Content-Type': 'application/json'
-}
+# Get single sheet
+response = requests.get('https://chseets.com/api/sheets/javascript-basics')
+print(response.json())
 
-response = requests.get(
-    f'{API_URL}/sheets_meta',
-    headers=headers,
-    params={'select': '*', 'published': 'eq.true', 'limit': 10}
+# Search
+response = requests.post(
+    'https://chseets.com/api/search',
+    json={'q': 'linux'}
 )
-
 print(response.json())</code></pre>
-
-      <h4>cURL</h4>
-      <pre><code>curl -X GET \
-  'https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1/sheets_meta?select=*&published=eq.true&limit=5' \
-  -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
-  -H 'Content-Type: application/json'</code></pre>
     </div>
 
     <div class="card">
       <h3>Response Format</h3>
-      <p>All responses are JSON arrays. Example sheet object:</p>
+      <p>All responses are JSON. Example sheet object:</p>
       <pre><code>{
-  "id": "a1b2c3d4...",
   "title": "JavaScript Basics",
   "slug": "javascript-basics",
-  "description": "Quick reference for JS fundamentals",
+  "language": "en",
   "tags": ["javascript", "programming", "web"],
-  "lang": "en",
-  "storage_path": "public/javascript-basics.pdf",
-  "preview_path": "public/previews/javascript-basics.png",
-  "published": true,
-  "created_at": "2025-01-15T10:30:00Z"
+  "summary": "Quick reference for JS fundamentals",
+  "updated_at": "2025-01-15"
 }</code></pre>
-
-      <h4>Get File URL</h4>
-      <p>Construct the download URL from <code>storage_path</code>:</p>
-      <pre><code>https://zpvqcjrtsbznaaphjhug.supabase.co/storage/v1/object/public/sheets/{storage_path}</code></pre>
     </div>
 
     <div class="card">
       <h3>Pricing and Limits</h3>
-      <p>The chseets API is <strong>completely free</strong>. Powered by Supabase free tier:</p>
+      <p>The chseets API is <strong>completely free</strong>:</p>
       <ul>
-        <li><strong>Rate limit:</strong> 100 requests per minute per IP</li>
+        <li><strong>Rate limit:</strong> 60 requests per minute per IP</li>
         <li><strong>CORS:</strong> Enabled for all origins</li>
-        <li><strong>Authentication:</strong> Not required for public sheets</li>
-        <li><strong>Cost:</strong> Free for all users, no hidden fees</li>
+        <li><strong>Authentication:</strong> Not required</li>
+        <li><strong>Cost:</strong> Free for all users</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>For Developers</h3>
-      <p>The OpenAPI specification for this service is available at <code>docs/api/openapi.yaml</code> in the
-        repository.</p>
+      <p>The OpenAPI specification is available at <code>docs/api/openapi.yaml</code> in the repository.</p>
       <ul>
-        <li>Describes all public paths, query parameters and response formats</li>
-        <li>Load it into OpenAPI tools to inspect the service</li>
-        <li>Generate client programs or integrate chseets data into your projects</li>
+        <li>Describes all endpoints, parameters, and response formats</li>
+        <li>Load it into OpenAPI tools to explore the service</li>
+        <li>Generate client SDKs for your preferred language</li>
       </ul>
     </div>
 
