@@ -1,0 +1,92 @@
+# =============================================================================
+# Chseets Deploy - Production Deployment
+# =============================================================================
+#
+# PURPOSE: Deploy web/ folder to production server
+# RUNNER: Self-hosted Debian (chseets-debian-01)
+# TARGET: /srv/www/chseets
+#
+# TRIGGERS:
+#   - Push to main (after PR merge)
+#   - Manual workflow_dispatch
+#
+# SECURITY:
+#   ✓ Self-hosted runner NEVER runs on PRs
+#   ✓ Only runs on main branch push
+#   ✓ Minimal permissions (rsync + caddy reload only)
+#   ✓ Fork PRs cannot trigger this workflow
+#
+# =============================================================================
+
+name: Chseets Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'web/**'
+      - '.github/workflows/chseets-deploy.yml'
+
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  # ===========================================================================
+  # Deploy to Debian Server
+  # ===========================================================================
+  deploy:
+    name: Deploy to Production
+    runs-on: self-hosted
+
+    # SECURITY: Double-check we're on main
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deployment Info
+        run: |
+          echo "========================================"
+          echo "  Chseets Production Deployment"
+          echo "========================================"
+          echo "  Commit: ${{ github.sha }}"
+          echo "  Branch: ${{ github.ref_name }}"
+          echo "  Actor:  ${{ github.actor }}"
+          echo "  Time:   $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          echo "  Target: /srv/www/chseets"
+          echo "========================================"
+
+      - name: Deploy with rsync
+        run: |
+          sudo rsync -av --delete \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude "node_modules" \
+            --exclude ".DS_Store" \
+            --exclude "*.md" \
+            --exclude "docs" \
+            --exclude "tools" \
+            --exclude "templates" \
+            --exclude "sheets" \
+            web/ /srv/www/chseets/
+
+      - name: Reload Caddy
+        run: sudo systemctl reload caddy
+
+      - name: Verify Deployment
+        run: |
+          test -f /srv/www/chseets/index.html && echo "index.html: OK"
+          test -f /srv/www/chseets/manifest.json && echo "manifest.json: OK"
+          test -f /srv/www/chseets/sw.js && echo "sw.js: OK"
+
+      - name: Deployment Summary
+        run: |
+          echo "### Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target:** /srv/www/chseets" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time:** $(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Site:** https://chseets.com" >> $GITHUB_STEP_SUMMARY

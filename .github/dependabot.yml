@@ -1,26 +1,50 @@
 # =============================================================================
-# Dependabot configuration - DISABLED
+# Dependabot Configuration - Optimized for Low Frequency
 # =============================================================================
-# Dependabot is disabled for this project to avoid unnecessary PRs.
-# The project is a vanilla HTML/CSS/JS site with minimal dependencies.
+#
+# STRATEGY:
+#   - Monthly schedule (low maintenance overhead)
+#   - Grouped updates (patch + minor together)
+#   - Low PR limit (avoid PR spam)
+#   - Security updates handled separately by GitHub
+#
 # =============================================================================
 
-# Uncomment below to re-enable Dependabot:
-#
-# version: 2
-# updates:
-#   - package-ecosystem: "github-actions"
-#     directory: "/"
-#     schedule:
-#       interval: "weekly"
-#     open-pull-requests-limit: 5
-#     assignees:
-#       - "goAuD"
-#
-#   - package-ecosystem: "npm"
-#     directory: "/"
-#     schedule:
-#       interval: "weekly"
-#     open-pull-requests-limit: 5
-#     assignees:
-#       - "goAuD"
+version: 2
+
+updates:
+  # --- GitHub Actions ---
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    groups:
+      actions-minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # --- npm (dev tools only) ---
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 1
+    groups:
+      npm-minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Major updates manually reviewed
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(deps)"

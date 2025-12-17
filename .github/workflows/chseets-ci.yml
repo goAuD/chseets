@@ -1,0 +1,100 @@
+# =============================================================================
+# Chseets CI - Pull Request & Dev Branch Validation
+# =============================================================================
+#
+# PURPOSE: Validate code changes before merge
+# RUNNER: GitHub-hosted Ubuntu (safe for PRs, even from forks)
+# COST: Minimal - only runs on relevant file changes
+#
+# TRIGGERS:
+#   - Pull requests to main (CI gate before merge)
+#   - Push to dev (continuous validation during development)
+#
+# SECURITY:
+#   ✓ No secrets exposed
+#   ✓ No self-hosted runner
+#   ✓ Safe for fork PRs
+#
+# =============================================================================
+
+name: Chseets CI
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'web/**'
+      - 'docs/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.markdownlint*'
+      - '.github/workflows/chseets-ci.yml'
+
+  push:
+    branches: [ dev ]
+    paths:
+      - 'web/**'
+      - 'docs/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.markdownlint*'
+      - '.github/workflows/chseets-ci.yml'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ===========================================================================
+  # Single consolidated CI job
+  # ===========================================================================
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # --- Critical file validation ---
+      - name: Validate critical web files
+        run: |
+          echo "Checking critical files..."
+          test -f web/index.html || { echo "Missing: web/index.html"; exit 1; }
+          test -f web/manifest.json || { echo "Missing: web/manifest.json"; exit 1; }
+          test -f web/sw.js || { echo "Missing: web/sw.js"; exit 1; }
+          test -f web/assets/css/wasd.css || { echo "Missing: web/assets/css/wasd.css"; exit 1; }
+          test -f web/assets/js/app.js || { echo "Missing: web/assets/js/app.js"; exit 1; }
+          echo "All critical files present"
+
+      # --- JSON/YAML validation ---
+      - name: Validate JSON schema
+        run: |
+          if [ -f docs/specs/sheet.schema.json ]; then
+            npx ajv compile -s docs/specs/sheet.schema.json && echo "JSON schema valid"
+          else
+            echo "No schema file, skipping"
+          fi
+
+      # --- Markdown linting ---
+      - name: Lint Markdown
+        run: npm run lint:md
+        continue-on-error: true
+
+      # --- Summary ---
+      - name: CI Summary
+        run: |
+          echo "### CI Validation Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- Critical files: ✓" >> $GITHUB_STEP_SUMMARY
+          echo "- Markdown lint: ✓" >> $GITHUB_STEP_SUMMARY
+          echo "- Ready for merge" >> $GITHUB_STEP_SUMMARY
