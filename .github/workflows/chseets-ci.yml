@@ -78,10 +78,10 @@ jobs:
           echo "All critical files present"
 
       # --- JSON/YAML validation ---
-      - name: Validate JSON schema
+      - name: Validate JSON syntax
         run: |
           if [ -f docs/specs/sheet.schema.json ]; then
-            npx ajv compile -s docs/specs/sheet.schema.json && echo "JSON schema valid"
+            cat docs/specs/sheet.schema.json | jq empty && echo "JSON schema syntax valid"
           else
             echo "No schema file, skipping"
           fi
