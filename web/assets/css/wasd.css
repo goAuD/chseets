@@ -186,7 +186,6 @@ a {
 
 a:hover {
   color: var(--fg);
-  text-shadow: 0 0 8px var(--accent);
 }
 
 h1,
@@ -866,7 +865,7 @@ select:focus {
 }
 
 .burger:hover {
-  border-color: var(--border-active);
+  border-color: var(--accent);
 }
 
 .burger span {
