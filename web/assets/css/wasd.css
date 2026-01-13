@@ -1113,8 +1113,7 @@ select:focus {
 }
 
 .footer-category a:hover {
-  color: var(--fg);
-  text-shadow: 0 0 8px var(--accent);
+  color: #e8e8f0;
 }
 
 /* ============== PANEL (tabs) ============== */
