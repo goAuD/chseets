@@ -71,7 +71,6 @@ jobs:
             --exclude "docs" \
             --exclude "tools" \
             --exclude "templates" \
-            --exclude "sheets" \
             web/ /srv/www/chseets/
 
       - name: Reload Caddy
