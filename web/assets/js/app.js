@@ -640,7 +640,7 @@ document.addEventListener('click', async (e) => {
 
     try {
       await reportContent(sheetId, reasonText, supabase);
-      alert('Thank you for your report. We will review it within 48 hours.\n\nFor urgent issues, email: report@chseets.com');
+      alert('Thank you for your report. We will review it within 48 hours.\n\nFor urgent issues, email: chseets@wasdtravel.com');
     } catch (err) {
       console.error('Report error:', err);
       alert('Report submitted. Thank you for helping keep chseets safe.');
