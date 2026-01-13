@@ -1,0 +1,73 @@
+{
+    "slug": "thannhausen",
+    "title": "Thannhausen Citysheet",
+    "type": "citysheet",
+    "city": {
+        "name": "Thannhausen",
+        "region": "Styria",
+        "country": "AT",
+        "postal_code": "8160",
+        "coordinates": {
+            "lat": 47.2667,
+            "lng": 15.6167
+        },
+        "population": "~2.4k"
+    },
+    "tagline": "Silence is not empty—it's full of patterns.",
+    "motto": "A place has a pulse. Your job is to notice it.",
+    "short_intro": "Thannhausen is a calm, hill-and-forest municipality near Weiz—rural in rhythm, strong in local hospitality. It's an ideal 'slow quest' zone: here, the world doesn't shout; it whispers.",
+    "sights": {
+        "main": "Schloss Thannhausen",
+        "description": "A historic castle site in the municipality, perfect as a 'lore anchor' for the quest tone."
+    },
+    "categories": [
+        "travel",
+        "city",
+        "hospitality"
+    ],
+    "pois": [
+        {
+            "id": "THA_01",
+            "name": "Schlosstaverne",
+            "type": "Gastro / Checkpoint",
+            "address": "Schlossgasse 100",
+            "story": "Find the courtyard feeling: stand still for 30 seconds and name the quietest detail you notice.",
+            "narration": "The tavern beside the castle feels like a checkpoint built from food, wood, and old stories.",
+            "next_station": "POI_THA_02",
+            "hero_suggestion": "Castle gate/courtyard/warm interior light."
+        },
+        {
+            "id": "THA_02",
+            "name": "Gasthaus Hafner",
+            "type": "Gastro / Local node",
+            "address": "Peesenstraße 19",
+            "story": "Ask one question: 'What's the house specialty?' Write the answer as a single word.",
+            "narration": "A real village quest starts when you ask locals what's truly 'the specialty'—and listen.",
+            "next_station": "POI_THA_03",
+            "hero_suggestion": "Signboard/table/menu chalkboard."
+        },
+        {
+            "id": "THA_03",
+            "name": "Kernölfenster (24h local product window)",
+            "type": "Gastro / Micro-loot node",
+            "address": "Kalvarienbergstraße 4",
+            "story": "Collect one 'local relic': take a mental note of the smell, color, or label—no photo needed.",
+            "narration": "A tiny window of pumpkin seed oil can feel like a loot chest: small, local, and strangely powerful.",
+            "next_station": "POI_THA_04",
+            "hero_suggestion": "Window/bottle silhouettes/night-friendly shot."
+        },
+        {
+            "id": "THA_04",
+            "name": "Movement Vibe (community pulse anchor)",
+            "type": "Gastro / Vibe checkpoint",
+            "reference": "Municipality's movement initiative/recognition in 2025 (use as lore flavor)",
+            "story": "Do a 60-second 'movement check': walk 30 steps slower than usual and notice what changes.",
+            "narration": "This place treats movement like a shared ritual—the village itself becomes your party.",
+            "next_station": "POI_THA_01 (loop back)",
+            "hero_suggestion": "Street + hills/path/community noticeboard."
+        }
+    ],
+    "updated_at": "2025-12-20",
+    "author": "goAuD - WASD Travel",
+    "license": "CC BY 4.0 - Open & Reproducible"
+}

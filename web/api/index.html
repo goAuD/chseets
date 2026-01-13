@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>chseets • Public API Documentation</title>
   <meta name="description"
-    content="Access cheat sheets programmatically with the chseets REST API. Free, open, and easy to integrate.">
+    content="Access cheat sheets and citysheets programmatically with the chseets REST API. Free, open, and easy to integrate.">
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/assets/icons/icon-192.png">
   <meta name="theme-color" content="#0c0f13">
@@ -14,8 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Share+Tech+Mono&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/wasd.css?v=20241212">
-  <script type="module" src="/assets/js/app.js?v=20241212"></script>
+  <link rel="stylesheet" href="/assets/css/wasd.css?v=20260113">
+  <script type="module" src="/assets/js/app.js?v=20260113"></script>
 </head>
 
 <body>
@@ -45,94 +45,138 @@
   <main class="container section">
     <div class="card">
       <h2>chseets Public API</h2>
-      <p>Access our cheat sheet database programmatically. The API is <strong>free, open, and requires no
+      <p>Access our citysheet and cheat sheet database programmatically. The API is <strong>free, open, and requires no
           authentication</strong>.</p>
       <p><strong>Base URL:</strong> <code>https://chseets.com/api</code></p>
+      <p><strong>Use case:</strong> Quest Hub & Content Base for WASD Travel Game Master AI</p>
     </div>
 
     <div class="card">
-      <h3>Endpoints</h3>
+      <h3>Static JSON Endpoints (Recommended)</h3>
+      <p>These endpoints serve pre-generated JSON files. Fast, reliable, no API limits.</p>
 
-      <h4>GET /api/meta</h4>
+      <h4>GET /api/meta.json</h4>
       <p>API version and metadata.</p>
-      <pre><code>curl https://chseets.com/api/meta</code></pre>
+      <pre><code>curl https://chseets.com/api/meta.json</code></pre>
 
-      <h4>GET /api/sheets</h4>
-      <p>List all published sheets. Supports optional <code>?page=</code> and <code>?limit=</code> query params.</p>
-      <pre><code>curl https://chseets.com/api/sheets</code></pre>
+      <h4>GET /api/sheets.json</h4>
+      <p>List all published citysheets.</p>
+      <pre><code>curl https://chseets.com/api/sheets.json</code></pre>
 
-      <h4>GET /api/sheets/{slug}</h4>
-      <p>Fetch a single sheet by its URL slug.</p>
-      <pre><code>curl https://chseets.com/api/sheets/javascript-basics</code></pre>
+      <h4>GET /api/sheets/{slug}.json</h4>
+      <p>Fetch a single citysheet with full POI data.</p>
+      <pre><code>curl https://chseets.com/api/sheets/weiz.json
+curl https://chseets.com/api/sheets/thannhausen.json</code></pre>
+    </div>
 
-      <h4>POST /api/search</h4>
-      <p>Search sheets by keyword. Send JSON body with <code>q</code> field.</p>
-      <pre><code>curl -X POST https://chseets.com/api/search \
-  -H "Content-Type: application/json" \
-  -d '{"q": "java"}'</code></pre>
+    <div class="card">
+      <h3>Supabase REST API (Live Database)</h3>
+      <p>Direct access to the Supabase database. Requires API key header.</p>
+      <pre><code>curl "https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1/sheets_meta?select=*" \
+  -H "apikey: YOUR_ANON_KEY"</code></pre>
     </div>
 
     <div class="card">
       <h3>Code Examples</h3>
 
       <h4>JavaScript (fetch)</h4>
-      <pre><code>// List all sheets
-fetch('https://chseets.com/api/sheets')
+      <pre><code>// List all citysheets
+fetch('https://chseets.com/api/sheets.json')
   .then(res => res.json())
   .then(data => console.log(data.results))
   .catch(err => console.error(err));
 
-// Get single sheet
-fetch('https://chseets.com/api/sheets/javascript-basics')
+// Get Weiz citysheet with POIs
+fetch('https://chseets.com/api/sheets/weiz.json')
   .then(res => res.json())
-  .then(sheet => console.log(sheet));
+  .then(sheet => {
+    console.log(sheet.title);      // "Weiz Citysheet"
+    console.log(sheet.pois);       // Array of 5 POIs
+    console.log(sheet.pois[0].story); // Quest prompt
+  });
 
-// Search
-fetch('https://chseets.com/api/search', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ q: 'python' })
-})
+// Get Thannhausen citysheet
+fetch('https://chseets.com/api/sheets/thannhausen.json')
   .then(res => res.json())
-  .then(data => console.log(data.results));</code></pre>
+  .then(sheet => console.log(sheet.pois));</code></pre>
 
       <h4>Python (requests)</h4>
       <pre><code>import requests
 
-# List all sheets
-response = requests.get('https://chseets.com/api/sheets')
-print(response.json())
+# List all citysheets
+response = requests.get('https://chseets.com/api/sheets.json')
+sheets = response.json()['results']
+print(f"Found {len(sheets)} citysheets")
 
-# Get single sheet
-response = requests.get('https://chseets.com/api/sheets/javascript-basics')
-print(response.json())
-
-# Search
-response = requests.post(
-    'https://chseets.com/api/search',
-    json={'q': 'linux'}
-)
-print(response.json())</code></pre>
+# Get Weiz citysheet
+response = requests.get('https://chseets.com/api/sheets/weiz.json')
+weiz = response.json()
+for poi in weiz['pois']:
+    print(f"{poi['id']}: {poi['name']} - {poi['story']}")</code></pre>
     </div>
 
     <div class="card">
-      <h3>Response Format</h3>
-      <p>All responses are JSON. Example sheet object:</p>
+      <h3>Response Format - Citysheet</h3>
+      <p>Example citysheet object (Weiz):</p>
       <pre><code>{
-  "title": "JavaScript Basics",
-  "slug": "javascript-basics",
-  "language": "en",
-  "tags": ["javascript", "programming", "web"],
-  "summary": "Quick reference for JS fundamentals",
-  "updated_at": "2025-01-15"
+  "slug": "weiz",
+  "title": "Weiz Citysheet",
+  "type": "citysheet",
+  "city": {
+    "name": "Weiz",
+    "region": "Styria",
+    "country": "AT",
+    "coordinates": { "lat": 47.2167, "lng": 15.6167 }
+  },
+  "tagline": "Your curiosity is the key—every corner is a tiny unlock.",
+  "pois": [
+    {
+      "id": "WEI_01",
+      "name": "Stadtmuseum Weiz",
+      "type": "Culture / Museum / Local node",
+      "address": "Elingasse 10",
+      "story": "Find one object that feels 'out of time'...",
+      "narration": "A pocket-sized time machine...",
+      "hero_suggestion": "Exterior facade / museum sign..."
+    }
+  ],
+  "updated_at": "2025-12-20"
 }</code></pre>
+    </div>
+
+    <div class="card">
+      <h3>Available Citysheets</h3>
+      <table style="width:100%; text-align:left;">
+        <thead>
+          <tr>
+            <th>Slug</th>
+            <th>City</th>
+            <th>POIs</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>weiz</code></td>
+            <td>Weiz, Styria AT</td>
+            <td>5</td>
+            <td><a href="/api/sheets/weiz.json">/api/sheets/weiz.json</a></td>
+          </tr>
+          <tr>
+            <td><code>thannhausen</code></td>
+            <td>Thannhausen, Styria AT</td>
+            <td>4</td>
+            <td><a href="/api/sheets/thannhausen.json">/api/sheets/thannhausen.json</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="card">
       <h3>Pricing and Limits</h3>
       <p>The chseets API is <strong>completely free</strong>:</p>
       <ul>
-        <li><strong>Rate limit:</strong> 60 requests per minute per IP</li>
+        <li><strong>Static JSON:</strong> No rate limits, cached by CDN</li>
         <li><strong>CORS:</strong> Enabled for all origins</li>
         <li><strong>Authentication:</strong> Not required</li>
         <li><strong>Cost:</strong> Free for all users</li>

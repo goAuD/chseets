@@ -1,0 +1,74 @@
+{
+    "slug": "weiz",
+    "title": "Weiz Citysheet",
+    "type": "citysheet",
+    "city": {
+        "name": "Weiz",
+        "region": "Styria",
+        "country": "AT",
+        "postal_code": "8160",
+        "coordinates": {
+            "lat": 47.2167,
+            "lng": 15.6167
+        },
+        "population": "~12.97k"
+    },
+    "tagline": "Your curiosity is the key—every corner is a tiny unlock.",
+    "motto": "Collect moments, not miles.",
+    "short_intro": "Weiz is a compact Styrian town where old streets, craft traditions, and a modern 'industry pulse' meet in one walkable loop. It's perfect for micro-quests: small checkpoints, quick unlocks, and quiet moments that feel surprisingly meaningful.",
+    "categories": [
+        "travel",
+        "city",
+        "hospitality"
+    ],
+    "pois": [
+        {
+            "id": "WEI_01",
+            "name": "Stadtmuseum Weiz",
+            "type": "Culture / Museum / Local node",
+            "address": "Elingasse 10",
+            "story": "Find one object that feels 'out of time'—describe it in one sentence.",
+            "narration": "A pocket-sized time machine: local history, craft, and the DNA of Weiz.",
+            "hero_suggestion": "Exterior facade / museum sign, straight-on, daytime, no people, clean frame."
+        },
+        {
+            "id": "WEI_02",
+            "name": "Plotzhirsch im Alten Rathaus",
+            "type": "Gastro / Local node",
+            "address": "Klammstrasse 4",
+            "story": "Order or observe: capture one detail that feels uniquely Weiz (menu, sound, smell).",
+            "narration": "A modern tavern vibe inside old walls—perfect for a 'pause and recharge' checkpoint.",
+            "hero_suggestion": "Old Rathaus facade / restaurant sign, warm evening light, slight angle, cozy vibe."
+        },
+        {
+            "id": "WEI_03",
+            "name": "Taborkirche",
+            "type": "Culture",
+            "address": "Hauptplatz 1",
+            "story": "Stand still for 20 seconds. Notice 3 sounds. Keep the calm as your 'buff'.",
+            "narration": "Old stone, quiet air, this is where the city lowers its voice.",
+            "hero_suggestion": "Church exterior with steps/approach path, calm sky, wide shot, minimal clutter."
+        },
+        {
+            "id": "WEI_04",
+            "name": "Die Klingenschmiede",
+            "type": "Museum",
+            "address": "Eisengasse 9a",
+            "story": "Choose your 'craft token': strength, precision, or patience—pick one and say why.",
+            "narration": "Steel memory: blades, tools, and a craft-line that runs through centuries.",
+            "hero_suggestion": "Close-up detail: metal/steel tool texture/signboard, high contrast, craft vibe."
+        },
+        {
+            "id": "WEI_05",
+            "name": "Schloss Radmannsdorf",
+            "type": "Castle / POI",
+            "address": "Radmannsdorfgasse 22",
+            "story": "Spot one defensive feature (real or imagined). Give it a playful name.",
+            "narration": "A castle with many lives—power, learning, and administration layered in one place.",
+            "hero_suggestion": "Wide exterior of the castle/building, include gate/entry lines, soft daylight, no people."
+        }
+    ],
+    "updated_at": "2025-12-20",
+    "author": "goAuD - WASD Travel",
+    "license": "CC BY 4.0 - Open & Reproducible"
+}

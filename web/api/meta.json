@@ -1,0 +1,12 @@
+{
+    "version": "1.0.0",
+    "api_base": "https://chseets.com/api",
+    "supabase_endpoint": "https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1/sheets_meta",
+    "updated_at": "2026-01-13",
+    "description": "chseets Public API - Quest Hub & Content Base for WASD Travel",
+    "endpoints": {
+        "sheets_list": "/api/sheets.json",
+        "sheet_detail": "/api/sheets/{slug}.json",
+        "supabase_direct": "https://zpvqcjrtsbznaaphjhug.supabase.co/rest/v1/sheets_meta"
+    }
+}
