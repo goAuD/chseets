@@ -1,6 +1,7 @@
 // /assets/js/app.js
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { CyberModal } from "/assets/js/modal.js";
+import { validateUpload, reportContent } from "/assets/js/content-filter.js";
 const PDFJS_CDN = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
 
 /* ---------------- Supabase ---------------- */
@@ -253,12 +254,13 @@ async function listSheets() {
         preview = pubPrev?.publicUrl || '';
       }
       return `
-        <div class="card-file preview" data-storage="${row.storage_path}" data-slug="${row.slug}">
+        <div class="card-file preview" data-storage="${row.storage_path}" data-slug="${row.slug}" data-id="${row.id}">
           <a class="thumb" href="${url}" target="_blank" rel="noopener">
             ${preview ? `<img src="${preview}" alt="${title}">` : `<div class="no-thumb">No preview</div>`}
           </a>
           <div class="content">
             <div class="name"><a href="${url}" target="_blank" rel="noopener">${title}</a></div>
+            <button class="btn btn-small btn-danger" data-action="report" data-sheet-id="${row.id}" data-sheet-title="${title}" title="Report inappropriate content">⚠️ Report</button>
           </div>
         </div>
       `;
@@ -363,6 +365,15 @@ async function renderPdfFirstPageToPng(inputBlob) {
 async function uploadFile(file) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) { alert("Sign in first."); return { error: new Error("Not signed in") }; }
+
+  // Content filter validation
+  const validation = validateUpload(file);
+  if (!validation.isValid) {
+    const errorMsg = "Upload blocked:\n" + validation.errors.join("\n");
+    alert(errorMsg);
+    return { error: new Error(validation.errors[0]) };
+  }
+
   const safe = file.name.replace(/\s+/g, '_');
   const path = `uploads/${user.id}/${Date.now()}_${safe}`;
   return await supabase.storage.from('sheets').upload(path, file, { upsert: false, contentType: file.type || undefined });
@@ -371,6 +382,16 @@ elUploadForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const files = Array.from(e.target.elements.file.files || []);
   if (!files.length) return;
+
+  // Pre-validate all files
+  for (const f of files) {
+    const validation = validateUpload(f);
+    if (!validation.isValid) {
+      alert(`Cannot upload "${f.name}":\n${validation.errors.join("\n")}`);
+      return;
+    }
+  }
+
   for (const f of files) {
     const { error } = await uploadFile(f);
     if (error) { alert(`Failed: ${f.name} — ${error.message}`); return; }
@@ -586,6 +607,45 @@ document.addEventListener('click', async (e) => {
       alert('Failed to delete account: ' + err.message);
       console.error('Delete account error:', err);
     }
+  }
+
+  // Report content
+  const reportBtn = e.target.closest('[data-action="report"]');
+  if (reportBtn) {
+    const sheetId = reportBtn.getAttribute('data-sheet-id');
+    const sheetTitle = reportBtn.getAttribute('data-sheet-title');
+
+    const reasons = [
+      'Adult/Sexual content',
+      'Violence or gore',
+      'Hate speech',
+      'Illegal content',
+      'Harassment',
+      'Copyright infringement',
+      'Spam or misleading',
+      'Other'
+    ];
+
+    const reason = prompt(
+      `Report "${sheetTitle}"\n\nSelect reason (enter number):\n` +
+      reasons.map((r, i) => `${i + 1}. ${r}`).join('\n') +
+      '\n\nOr type your own reason:'
+    );
+
+    if (!reason) return;
+
+    const reasonText = /^\d+$/.test(reason.trim())
+      ? reasons[parseInt(reason) - 1] || reason
+      : reason;
+
+    try {
+      await reportContent(sheetId, reasonText, supabase);
+      alert('Thank you for your report. We will review it within 48 hours.\n\nFor urgent issues, email: report@chseets.com');
+    } catch (err) {
+      console.error('Report error:', err);
+      alert('Report submitted. Thank you for helping keep chseets safe.');
+    }
+    return;
   }
 });
 

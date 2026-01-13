@@ -487,6 +487,37 @@ pre code {
   transform: scale(0.95);
 }
 
+/* Small button variant */
+.btn-small {
+  padding: 4px 8px;
+  font-size: 0.65rem;
+  font-family: var(--font-main);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  border-radius: var(--r-sm);
+}
+
+.btn-small:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Danger button (Report) */
+.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: var(--danger);
+  color: var(--bg-dark);
+  box-shadow: 0 0 10px var(--danger);
+}
+
 /* Exit button - magenta slide-in effect */
 .btn-exit {
   color: var(--neon-pink);
