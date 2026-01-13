@@ -852,7 +852,7 @@ select:focus {
 .burger {
   display: flex;
   background: transparent;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--border);
   color: var(--accent);
   width: 36px;
   height: 28px;
@@ -1211,7 +1211,7 @@ select:focus {
 }
 
 .sheet-card:hover {
-  border-color: var(--border-active);
+  border-color: var(--accent);
   transform: translateY(-4px);
 }
 
