@@ -163,6 +163,20 @@
     <section class="container">
       <div id="hero-cards" style="display:none"></div>
 
+      <div class="card" id="signin-card">
+        <div class="signin-header">
+          <button id="signin-btn" class="btn">Sign in</button>
+          <button id="signout-btn" class="btn-pink" disabled>Sign out</button>
+        </div>
+        <div class="signin-form">
+          <input type="text" id="signin-username" name="username" placeholder="Your name" autocomplete="name"
+            class="signin-input">
+          <input type="email" id="signin-email" name="email" placeholder="your@email.com" autocomplete="email"
+            class="signin-input">
+        </div>
+        <div id="signin-message" class="signin-message"></div>
+      </div>
+
       <div class="card">
         <h3>About chseets</h3>
         <ul>
@@ -180,20 +194,6 @@
           <li>Print with <code>Ctrl/Cmd + P</code> (A4)</li>
           <li>Or <a href="/profile/">upload</a> your own sheets</li>
         </ol>
-      </div>
-
-      <div class="card" id="signin-card">
-        <div class="signin-header">
-          <button id="signin-btn" class="btn">Sign in</button>
-          <button id="signout-btn" class="btn-pink" disabled>Sign out</button>
-        </div>
-        <div class="signin-form">
-          <input type="text" id="signin-username" name="username" placeholder="Your name" autocomplete="name"
-            class="signin-input">
-          <input type="email" id="signin-email" name="email" placeholder="your@email.com" autocomplete="email"
-            class="signin-input">
-        </div>
-        <div id="signin-message" class="signin-message"></div>
       </div>
     </section>
   </main>

@@ -755,7 +755,7 @@ pre code {
 }
 
 .footer a:hover {
-  color: var(--neon-white);
+  color: #e8e8f0;
 }
 
 .footer a:hover::after {
@@ -866,7 +866,7 @@ select:focus {
 }
 
 .burger:hover {
-  box-shadow: 0 0 10px var(--accent);
+  border-color: var(--border-active);
 }
 
 .burger span {
@@ -1212,8 +1212,7 @@ select:focus {
 }
 
 .sheet-card:hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow-neon);
+  border-color: var(--border-active);
   transform: translateY(-4px);
 }
 
