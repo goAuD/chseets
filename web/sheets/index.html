@@ -151,15 +151,18 @@
         const url = publicUrl(r.storage_path);
         const thumbUrl = r.preview_path ? publicUrl(r.preview_path) : '';
         return `
-          <a href="${url}" target="_blank" class="sheet-card">
-            <div class="preview">
-              ${thumbUrl ? `<img src="${thumbUrl}" alt="${r.title}" loading="lazy">` : `<div class="no-preview">No preview</div>`}
-            </div>
-            <div class="info">
-              <div class="sheet-title" title="${r.title}">${r.title}</div>
-              <div class="sheet-meta">${new Date(r.created_at).toLocaleDateString()}</div>
-            </div>
-          </a>`;
+          <div class="sheet-card" data-id="${r.id || r.slug}">
+            <a href="${url}" target="_blank" class="sheet-link">
+              <div class="preview">
+                ${thumbUrl ? `<img src="${thumbUrl}" alt="${r.title}" loading="lazy">` : `<div class="no-preview">No preview</div>`}
+              </div>
+              <div class="info">
+                <div class="sheet-title" title="${r.title}">${r.title}</div>
+                <div class="sheet-meta">${new Date(r.created_at).toLocaleDateString()}</div>
+              </div>
+            </a>
+            <button class="btn-small btn-danger" data-action="report" data-sheet-id="${r.id || r.slug}" data-sheet-title="${r.title}" title="Report inappropriate content">⚠️ Report</button>
+          </div>`;
       }).join('');
     }
 
@@ -169,6 +172,57 @@
 
     window.addEventListener('sheet:deleted', () => load());
     window.addEventListener('storage', (e) => { if (e.key === 'sheet:deleted') load(); });
+
+    // Report button handler
+    grid.addEventListener('click', async (e) => {
+      const reportBtn = e.target.closest('[data-action="report"]');
+      if (!reportBtn) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const sheetId = reportBtn.getAttribute('data-sheet-id');
+      const sheetTitle = reportBtn.getAttribute('data-sheet-title');
+
+      const reasons = [
+        'Adult/Sexual content',
+        'Violence or gore',
+        'Hate speech',
+        'Illegal content',
+        'Harassment',
+        'Copyright infringement',
+        'Spam or misleading',
+        'Other'
+      ];
+
+      const reason = prompt(
+        `Report "${sheetTitle}"\n\nSelect reason (enter number):\n` +
+        reasons.map((r, i) => `${i + 1}. ${r}`).join('\n') +
+        '\n\nOr type your own reason:'
+      );
+
+      if (!reason) return;
+
+      const reasonText = /^\d+$/.test(reason.trim())
+        ? reasons[parseInt(reason) - 1] || reason
+        : reason;
+
+      // Submit report
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        await supabase.from('reports').insert([{
+          sheet_id: sheetId,
+          reason: reasonText,
+          reporter_id: user?.id || null,
+          reporter_email: user?.email || 'anonymous',
+          status: 'pending'
+        }]);
+        alert('Thank you for your report. We will review it within 48 hours.\n\nFor urgent issues, email: chseets@wasdtravel.com');
+      } catch (err) {
+        console.warn('Report error:', err);
+        alert('Report submitted. Thank you for helping keep chseets safe.');
+      }
+    });
   </script>
 </body>
 

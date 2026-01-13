@@ -1,0 +1,39 @@
+{
+    "count": 2,
+    "type": "citysheets",
+    "description": "WASD Travel Quest Hub - Citysheet collection for the Game Master AI",
+    "results": [
+        {
+            "slug": "weiz",
+            "title": "Weiz Citysheet",
+            "type": "citysheet",
+            "city": "Weiz",
+            "region": "Styria, AT",
+            "poi_count": 5,
+            "categories": [
+                "travel",
+                "city",
+                "hospitality"
+            ],
+            "tagline": "Your curiosity is the key—every corner is a tiny unlock.",
+            "updated_at": "2025-12-20",
+            "url": "/api/sheets/weiz.json"
+        },
+        {
+            "slug": "thannhausen",
+            "title": "Thannhausen Citysheet",
+            "type": "citysheet",
+            "city": "Thannhausen",
+            "region": "Styria, AT",
+            "poi_count": 4,
+            "categories": [
+                "travel",
+                "city",
+                "hospitality"
+            ],
+            "tagline": "Silence is not empty—it's full of patterns.",
+            "updated_at": "2025-12-20",
+            "url": "/api/sheets/thannhausen.json"
+        }
+    ]
+}
